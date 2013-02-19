@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public class Card {
 	
-	// Name of database table where Card objects are stored.
-	public static final String TABLE_NAME = "cards";
-	
 	// Fields
 	private int id;
 	private double set; // promotional sets are denoted with decimals; Ex. the promotional cards that were released between set 17 and set 18 are denoted as set 17.5
