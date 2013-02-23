@@ -119,7 +119,7 @@ public class Launcher
 	private static void configureLogging() throws IOException 
 	{
 		 Properties log4jProperties = new Properties();
-		 InputStream in = new FileInputStream("src/main/log4j.properties");
+		 InputStream in = new FileInputStream("src/org/naruto/main/log4j.properties");
 		 try {
 			 log4jProperties.load(in);
 		 } finally {

@@ -16,12 +16,17 @@ public class Card {
 	private String turnChakraCost; // for jutsu cards the cost is denoted with letters; Ex. WWW1 would denote a jutsu that costs 3 wind and 1 generic chakra 
 	private int handCost;
 	private ArrayList<String> characteristics; 
+	private String healthyStats;
+	private String injuredStats;
+	private String effect;
 	private ArrayList<String> attributes;
 	private Rarity rarity; 
 	// TODO : add images
 	
 	public Card(){
-		
+		elements = new ArrayList<Element>();
+		characteristics = new ArrayList<String>();
+		attributes = new ArrayList<String>();
 	}
 	
 	public int getId() {
@@ -88,6 +93,30 @@ public class Card {
 		this.characteristics = characteristics;
 	}
 
+	public String getHealthyStats() {
+		return healthyStats;
+	}
+
+	public void setHealthyStats(String healthyStats) {
+		this.healthyStats = healthyStats;
+	}
+
+	public String getInjuredStats() {
+		return injuredStats;
+	}
+
+	public void setInjuredStats(String injuredStats) {
+		this.injuredStats = injuredStats;
+	}
+
+	public String getEffect() {
+		return effect;
+	}
+
+	public void setEffect(String effect) {
+		this.effect = effect;
+	}
+
 	public ArrayList<String> getAttribute() {
 		return attributes;
 	}
@@ -133,13 +162,17 @@ public class Card {
 			characteristics.add(characteristic);
 		}
 		
+		healthyStats = resultSet.getString(index++);
+		injuredStats = resultSet.getString(index++);
+		effect = resultSet.getString(index++);
+		
 		// Parse the attributes string into an ArrayList
 		String attributeString[] = resultSet.getString(index++).split("/");
 		for (String attribute : attributeString){
 			attributes.add(attribute);
 		}
 		
-		rarity = Rarity.valueOf(resultSet.getString(index++));	
+		rarity = Rarity.fromString(resultSet.getString(index++));	
 	}
 	
 	public void storeTo(PreparedStatement stmt) throws SQLException {
@@ -174,6 +207,10 @@ public class Card {
 		characteristicString = characteristicString.trim();
 		stmt.setString(index++, characteristicString);
 		
+		stmt.setString(index++, healthyStats);
+		stmt.setString(index++, injuredStats);
+		stmt.setString(index++, effect);
+		
 		// Create a properly formated string of all the attributes separated by " "
 		String attributeString = "";
 		for (String attribute : attributes){
@@ -197,10 +234,15 @@ public class Card {
 				+ ((cardNumber == null) ? 0 : cardNumber.hashCode());
 		result = prime * result
 				+ ((characteristics == null) ? 0 : characteristics.hashCode());
+		result = prime * result + ((effect == null) ? 0 : effect.hashCode());
 		result = prime * result
 				+ ((elements == null) ? 0 : elements.hashCode());
 		result = prime * result + handCost;
+		result = prime * result
+				+ ((healthyStats == null) ? 0 : healthyStats.hashCode());
 		result = prime * result + id;
+		result = prime * result
+				+ ((injuredStats == null) ? 0 : injuredStats.hashCode());
 		result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(set);
@@ -239,6 +281,11 @@ public class Card {
 				return false;
 		} else if (!characteristics.equals(other.characteristics))
 			return false;
+		if (effect == null) {
+			if (other.effect != null)
+				return false;
+		} else if (!effect.equals(other.effect))
+			return false;
 		if (elements == null) {
 			if (other.elements != null)
 				return false;
@@ -246,7 +293,17 @@ public class Card {
 			return false;
 		if (handCost != other.handCost)
 			return false;
+		if (healthyStats == null) {
+			if (other.healthyStats != null)
+				return false;
+		} else if (!healthyStats.equals(other.healthyStats))
+			return false;
 		if (id != other.id)
+			return false;
+		if (injuredStats == null) {
+			if (other.injuredStats != null)
+				return false;
+		} else if (!injuredStats.equals(other.injuredStats))
 			return false;
 		if (rarity != other.rarity)
 			return false;

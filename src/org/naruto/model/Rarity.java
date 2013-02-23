@@ -20,4 +20,15 @@ public enum Rarity {
     public String toString() {
         return text;
     }
+    
+    public static Rarity fromString(String text) {
+        if (text != null) {
+        	for (Rarity rarity : Rarity.values()) {
+        		if (text.equalsIgnoreCase(rarity.text)) {
+        			return rarity;
+        		}
+        	}
+        }
+        return null;
+    }
 }

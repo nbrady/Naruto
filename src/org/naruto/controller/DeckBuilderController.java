@@ -1,9 +1,13 @@
 package org.naruto.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.naruto.model.Card;
 import org.naruto.model.Deck;
+import org.naruto.model.persist.Database;
 
 public class DeckBuilderController {
 	private Deck deck;
@@ -38,5 +42,41 @@ public class DeckBuilderController {
 		} else {
 			return deck.getErrors();
 		}
+	}
+	
+	public ArrayList<Card> searchForMatches(HttpServletRequest req){
+		try {
+			String cardName = req.getParameter("cardNameBox");
+			String cardNumber = req.getParameter("cardNumberBox");
+			
+			// Search for matching cards
+			if (!cardNumber.equals("") && !cardName.equals("")){
+	
+				// Search based on card number
+				ArrayList<Card> searchResults = new ArrayList<Card>();
+				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
+				
+				// Make sure the card name also matches
+				if (searchResults.get(0) != null && searchResults.get(0).getCardName().equals(cardName)){
+					return searchResults;
+				}	
+			} else if (!cardNumber.equals("")){
+				// Search based on card number
+				ArrayList<Card> searchResults = new ArrayList<Card>();
+				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
+				
+				if (searchResults.get(0) != null) {
+					return searchResults;
+				}
+			} else if (!cardName.equals("")) {
+				// Search based on card name
+				return Database.getInstance().getCardsByCardName(cardName);	
+			}
+		} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		}
+		return null;
 	}
 }

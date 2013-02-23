@@ -8,7 +8,7 @@
 <!-- Servlets -->
 <servlet>
 	<servlet-name>DeckBuilderServlet</servlet-name>
-	<servlet-class>org.naruto.servlet.CreateDeckServlet</servlet-class>
+	<servlet-class>org.naruto.servlet.DeckBuilderServlet</servlet-class>
 </servlet>
 
 <!-- Servlet Mappings -->
