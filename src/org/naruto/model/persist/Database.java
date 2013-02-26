@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.naruto.model.Card;
 
@@ -94,6 +96,29 @@ public class Database {
 			} else {
 				return results;
 			}
+		} finally{
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	public Collection<String> suggestCardNames(String term) throws SQLException {
+		Connection conn = DBUtil.getThreadLocalConnection();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		
+		try{
+			stmt = conn.prepareStatement("SELECT card_name FROM cards WHERE card_name LIKE ?");
+			stmt.setString(1, term + "%");
+			
+			resultSet = stmt.executeQuery();
+			
+			List<String> result = new ArrayList<String>();
+			while (resultSet.next()) {
+				result.add(resultSet.getString(1));
+			}
+				                       
+			return result;
 		} finally{
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);

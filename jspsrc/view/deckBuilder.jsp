@@ -7,7 +7,10 @@
 		
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-
+		
+		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-1.8.21.custom.css" />
+		<script type="text/javascript" src="/static/js/jquery-ui-1.8.21.custom.min.js"></script>
+		
 		<style type="text/css">
 			label.error, .error {color: red;}
 		</style>
@@ -16,8 +19,21 @@
        		$(document).ready(function() {
        			$("#addCardForm").validate();
        		});
+       		
+			$("#cardNameElt").autocomplete({
+				source: function(req, resp) {
+					$.ajax({
+						type: 'GET',
+						url: "/cardNameCompletion?term=" + req.term,
+						success: function(data, textStatus, jqXHR) {
+							resp(data);
+                    	}
+					});
+				}
+			});
        	</script>
-	<head>
+          	
+	</head>
 	
 	<body>
 		<div style="height: 50%; overflow-y: scroll;">
@@ -26,7 +42,7 @@
 				<table>
 					<tr>
 						<td class="text">Card Name: </td>
-						<td> <input type="text" name="cardNameBox" size="12" value="${cardName}" /></td>
+						<td> <input type="text" id="cardNameElt" name="cardNameBox" size="12" value="${cardName}" /></td>
 						<td></td>
 					</tr>
 					

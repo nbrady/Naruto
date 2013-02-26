@@ -5,16 +5,27 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
          
-<!-- Servlets -->
-<servlet>
-	<servlet-name>DeckBuilderServlet</servlet-name>
-	<servlet-class>org.naruto.servlet.DeckBuilderServlet</servlet-class>
-</servlet>
-
-<!-- Servlet Mappings -->
-<servlet-mapping>
-	<servlet-name>DeckBuilderServlet</servlet-name>
-	<url-pattern>deckBuilder</url-pattern>
-</servlet-mapping>
-
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>DeckBuilderServlet</servlet-name>
+		<servlet-class>org.naruto.servlet.DeckBuilderServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CardNameCompletion</servlet-name>
+		<servlet-class>org.naruto.servlet.CardNameCompletion</servlet-class>
+	</servlet>
+	
+	<!-- Servlet Mappings -->
+	<servlet-mapping>
+		<servlet-name>DeckBuilderServlet</servlet-name>
+		<url-pattern>deckBuilder</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CardNameCompletion</servlet-name>
+		<url-pattern>cardNameCompletion</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+	</servlet-mapping>
 </web-app>
