@@ -21,10 +21,7 @@ public class CardNameCompletion extends HttpServlet{
 		List<String> suggestions = new ArrayList<String>();
 		
 		// Require at least 3 letters before getting suggestions from database.
-		if (term.length() >= 3) {
-			// Debugging
-			System.out.println("Card name completion term=" + term);
-			
+		if (term.length() >= 3) {			
 			try {
 				suggestions.addAll(Database.getInstance().suggestCardNames(term));
 			} catch (SQLException e) {

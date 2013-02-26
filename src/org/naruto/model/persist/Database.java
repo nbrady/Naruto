@@ -108,7 +108,7 @@ public class Database {
 		ResultSet resultSet = null;
 		
 		try{
-			stmt = conn.prepareStatement("SELECT card_name FROM cards WHERE card_name LIKE ?");
+			stmt = conn.prepareStatement("SELECT distinct card_name FROM cards WHERE card_name LIKE ?");
 			stmt.setString(1, term + "%");
 			
 			resultSet = stmt.executeQuery();
