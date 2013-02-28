@@ -21,6 +21,7 @@ public class Card {
 	private String effect;
 	private ArrayList<String> attributes;
 	private Rarity rarity; 
+
 	// TODO : add images
 	
 	public Card(){

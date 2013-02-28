@@ -114,7 +114,7 @@ public class Deck {
 		
 		// check to be sure side deck is exactly 0 cards or 10 cards
 		if (sideDeck.size() != 0 && sideDeck.size() != 10){
-			errors.add("Side deck must be exactly 10 cards");
+			errors.add("Side deck must be exactly 0 or 10 cards");
 		}
 		
 		// create combined deck

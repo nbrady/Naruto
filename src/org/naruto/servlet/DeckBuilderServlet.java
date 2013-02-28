@@ -72,11 +72,11 @@ private static final long serialVersionUID = 1L;
 			}
 			
 			// Check the deck for errors
-		//	ArrayList<String> errors = controller.getDeckErrors();
+			ArrayList<String> errors = controller.getDeckErrors();
 			
 			// set request attributes
 			req.getSession().setAttribute("deck", controller.getDeck());
-		//	req.setAttribute("errors", errors);
+			req.setAttribute("errors", errors);
 			
 			req.getRequestDispatcher("/view/deckBuilder.jsp").forward(req, resp);
 		} else {

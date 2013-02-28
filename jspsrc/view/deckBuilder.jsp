@@ -72,6 +72,8 @@
 							<th>Healthy Stats</th>
 							<th>Injured Stats</th>
 							<th>Attribute</th>
+							<th></th>
+							<th></th>
 						</tr>
 						
 						<c:forEach var="card" items="${searchResults}">
@@ -84,6 +86,8 @@
 								<td>${card.healthyStats}</td>
 								<td>${card.injuredStats}</td>
 								<td>${card.attribute}</td>
+								<td><input name="addCardToMainButton" type="submit" value="Add To Main Deck" /></td>
+								<td><input name="addCardToSideButton" type="submit" value="Add To Side Deck" /></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -112,6 +116,7 @@
 					<th>Healthy Stats</th>
 					<th>Injured Stats</th>
 					<th>Attribute</th>
+					<th</th>
 				</tr>
 				<c:forEach var="mainCard" items="${deck.mainDeck}">
 					<tr>
@@ -123,6 +128,7 @@
 						<td>${mainCard.healthyStats}</td>
 						<td>${mainCard.injuredStats}</td>
 						<td>${mainCard.attribute}</td>
+						<td><input name="removeCardFromMainButton" type="submit" value="Remove Card" />
 					</tr>
 				</c:forEach>
 			</table>
@@ -140,6 +146,7 @@
 					<th>Healthy Stats</th>
 					<th>Injured Stats</th>
 					<th>Attribute</th>
+					<th></th>
 				</tr>
 				<c:forEach var="sideCard" items="${deck.sideDeck}">
 					<tr>
@@ -151,6 +158,7 @@
 						<td>${sideCard.healthyStats}</td>
 						<td>${sideCard.injuredStats}</td>
 						<td>${sideCard.attribute}</td>
+						<td><input name="removeCardFromSideButton" type="submit" value="Remove Card" />
 					</tr>
 				</c:forEach>
 			</table>
