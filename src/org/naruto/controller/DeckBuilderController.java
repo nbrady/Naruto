@@ -36,6 +36,22 @@ public class DeckBuilderController {
 		return deck;
 	}
 	
+	public Deck removeCardFromMain(Card card, int quantity) {
+		 for (int i = 0; i< quantity; i++){
+			 deck.removeCardFromMainDeck(card);
+		 }
+		 
+		 return deck;
+	}
+	
+	public Deck removeCardFromSide(Card card, int quantity) {
+		 for (int i = 0; i< quantity; i++){
+			 deck.removeCardFromSideDeck(card);
+		 }
+		 
+		 return deck;
+	}
+	
 	public ArrayList<String> getDeckErrors(){
 		if (deck.isBlockLegal()){
 			return null;
@@ -73,10 +89,10 @@ public class DeckBuilderController {
 				return Database.getInstance().getCardsByCardName(cardName);	
 			}
 		} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			
 		}
 		return null;
 	}
+
 }

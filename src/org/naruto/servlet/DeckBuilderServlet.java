@@ -38,35 +38,70 @@ private static final long serialVersionUID = 1L;
 	    // Form submission
 		if (req.getParameter("submitted") != null) { 
 			// Parse fields
-			//String cardName = req.getParameter("cardNameBox");
-			String cardNumber = req.getParameter("cardNumberBox");
-			int quantity = 1;
+			String action = req.getParameter("action");
+			int requestId = Integer.parseInt(req.getParameter("requestId"));
+			int quantity = 1; // Default quantity is 1
 			try {
-				quantity = Integer.parseInt(req.getParameter("quantityBox"));
+				quantity = Integer.parseInt(req.getParameter("quantityBox" + requestId));
 			} catch (NumberFormatException e){
-				// No quantity is required to perform a search
+				// Quantity is not required
 			}
-			if (req.getParameter("addCardToMainButton") != null){
+			
+			if (action.equals("addCardToMain")){
 				// Add card to maindeck
-				Card card;
 				try {
-					card = Database.getInstance().getCardByCardNumber(cardNumber);
+					Card card = Database.getInstance().getCardById(requestId);
 					controller.addCardToMain(card, quantity);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if (req.getParameter("addCardToSideButton") != null){
+			} 
+			
+			else if (action.equals("addCardToSide")){
 				// Add card to sidedeck
-				Card card;
 				try {
-					card = Database.getInstance().getCardByCardNumber(cardNumber);
+					Card card = Database.getInstance().getCardById(requestId);
 					controller.addCardToSide(card, quantity);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-			} else if (req.getParameter("searchButton") != null) {
+			} 
+			
+			else if (action.equals("removeCardFromMain")){
+				// Remove card from maindeck
+				try {
+					Card card = Database.getInstance().getCardById(requestId);
+					int removeQuantity = 1;
+					try {
+						removeQuantity = Integer.parseInt(req.getParameter("removeMainQuantityBox" + requestId));
+					} catch (NumberFormatException e){
+						// Quantity is not required
+					}
+					
+					controller.removeCardFromMain(card, removeQuantity);
+				} catch (SQLException e){
+					e.printStackTrace();
+				}
+			} 
+			
+			else if (action.equals("removeCardFromSide")){
+				// Remove card from sidedeck
+				try {
+					Card card = Database.getInstance().getCardById(requestId);
+					int removeQuantity = 1;
+					try {
+						removeQuantity = Integer.parseInt(req.getParameter("removeSideQuantityBox" + requestId));
+					} catch (NumberFormatException e){
+						// Quantity is not required
+					}
+					
+					controller.removeCardFromSide(card, removeQuantity);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}	
+			} 
+			
+			else if (req.getParameter("searchButton") != null) {
 				ArrayList<Card> searchResults = controller.searchForMatches(req);
 				req.setAttribute("searchResults", searchResults);
 			}

@@ -317,5 +317,9 @@ public class Card {
 			return false;
 		return true;
 	}
+	
+	public String toString(){
+		return cardName + " " + cardNumber;
+	}
 
 }
