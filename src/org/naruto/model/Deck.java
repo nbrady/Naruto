@@ -122,7 +122,7 @@ public class Deck {
 		ArrayList<Card> combinedDeck = (ArrayList<Card>) mainDeck.clone();
 		combinedDeck.addAll(sideDeck);
 		
-		// check to be sure no more than 3 copies of a card with the same name are in the main deck and side deck combined
+		// check to be sure no more than the maximum allowed copies are in the main deck and side deck combined
 		ArrayList<String> processedCardNames = new ArrayList<String>();
 		for (Card currentCard : combinedDeck){
 			if(!processedCardNames.contains(currentCard.getCardName())){
@@ -132,8 +132,8 @@ public class Deck {
 						occurences++;
 					}	
 				}
-				if (occurences > 3){
-					errors.add("Deck contains more than 3 copies of card with name: " + currentCard.getCardName());
+				if (occurences > currentCard.getMaxBlockCopies()){
+					errors.add("Deck contains more than " + currentCard.getMaxBlockCopies() + " copies of card with name: " + currentCard.getCardName());
 				}
 				processedCardNames.add(currentCard.getCardName());	
 			}

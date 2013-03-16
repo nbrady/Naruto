@@ -101,12 +101,7 @@
 						<tr>
 							<th>Card Name</th>
 							<th>Card Number</th>
-							<th>Elements</th>
-							<th>Turn/Chakra Cost</th>
-							<th>Hand Cost</th>
-							<th>Healthy Stats</th>
-							<th>Injured Stats</th>
-							<th>Attribute</th>
+							<th>Image</th>
 							<th>Action</th>
 							<th>Quantity</th>
 						</tr>
@@ -115,12 +110,7 @@
 							<tr>
 								<td>${card.cardName}</td>
 								<td>${card.cardNumber}</td>
-								<td>${card.elements}</td>
-								<td>${card.turnChakraCost}</td>
-								<td>${card.handCost}</td>
-								<td>${card.healthyStats}</td>
-								<td>${card.injuredStats}</td>
-								<td>${card.attribute}</td>
+								<td><img src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
 								<td><input id="addCardToMainDeckButton${card.id}" class="addCardToMain" type="submit" value="Add To Main Deck" /><br />
 									<input id="addCardToSideDeckButton${card.id}" class="addCardToSide" type="submit" value="Add To Side Deck" /></td>
 								<td><input type="text" name="quantityBox${card.id}" size="2" value="${quantity}"/></td>
@@ -151,12 +141,7 @@
 					<tr>
 						<th>Card Name</th>
 						<th>Card Number</th>
-						<th>Elements</th>
-						<th>Turn/Chakra Cost</th>
-						<th>Hand Cost</th>
-						<th>Healthy Stats</th>
-						<th>Injured Stats</th>
-						<th>Attribute</th>
+						<th>Image</th>
 						<th>Action</th>
 						<th>Quantity</th>
 					</tr>
@@ -164,12 +149,7 @@
 						<tr>
 							<td>${mainCard.cardName}</td>
 							<td>${mainCard.cardNumber}</td>
-							<td>${mainCard.elements}</td>
-							<td>${mainCard.turnChakraCost}</td>
-							<td>${mainCard.handCost}</td>
-							<td>${mainCard.healthyStats}</td>
-							<td>${mainCard.injuredStats}</td>
-							<td>${mainCard.attribute}</td>
+							<td><img src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
 							<td><input name="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" type="submit" value="Remove Card" /></td>
 							<td><input type="text" name="removeMainQuantityBox${card.id}" size="2" value="${quantity}"/></td>
 						</tr>
@@ -183,11 +163,7 @@
 					<tr>
 						<th>Card Name</th>
 						<th>Card Number</th>
-						<th>Elements</th>
-						<th>Turn/Chakra Cost</th>
-						<th>Hand Cost</th>
-						<th>Healthy Stats</th>
-						<th>Injured Stats</th>
+						<th>Image</th>
 						<th>Attribute</th>
 						<th>Action</th>
 					</tr>
@@ -195,12 +171,7 @@
 						<tr>
 							<td>${sideCard.cardName}</td>
 							<td>${sideCard.cardNumber}</td>
-							<td>${sideCard.elements}</td>
-							<td>${sideCard.turnChakraCost}</td>
-							<td>${sideCard.handCost}</td>
-							<td>${sideCard.healthyStats}</td>
-							<td>${sideCard.injuredStats}</td>
-							<td>${sideCard.attribute}</td>
+							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
 							<td><input name="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>
 							<td><input type="text" name="removeSideQuantityBox${card.id}" size="2" value="${quantity}"/></td>
 						</tr>

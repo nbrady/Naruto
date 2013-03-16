@@ -21,8 +21,8 @@ public class Card {
 	private String effect;
 	private ArrayList<String> attributes;
 	private Rarity rarity; 
-
-	// TODO : add images
+	private int maxUnlimitedCopies;
+	private int maxBlockCopies;
 	
 	public Card(){
 		elements = new ArrayList<Element>();
@@ -134,10 +134,25 @@ public class Card {
 		this.rarity = rarity;
 	}
 	
+	public int getMaxUnlimitedCopies() {
+		return maxUnlimitedCopies;
+	}
+
+	public void setMaxUnlimitedCopies(int maxUnlimitedCopies) {
+		this.maxUnlimitedCopies = maxUnlimitedCopies;
+	}
+
+	public int getMaxBlockCopies() {
+		return maxBlockCopies;
+	}
+
+	public void setMaxBlockCopies(int maxBlockCopies) {
+		this.maxBlockCopies = maxBlockCopies;
+	}
+
 	public void loadFrom(ResultSet resultSet) throws SQLException {
 		loadFrom(resultSet, 1);
 	}
-	
 	
 	// Create a Card object from a ResultSet beginning at the specified index
 	public void loadFrom(ResultSet resultSet, int index) throws SQLException {
@@ -173,7 +188,9 @@ public class Card {
 			attributes.add(attribute);
 		}
 		
-		rarity = Rarity.fromString(resultSet.getString(index++));	
+		rarity = Rarity.fromString(resultSet.getString(index++));
+		maxUnlimitedCopies = resultSet.getInt(index++);
+		maxBlockCopies = resultSet.getInt(index++);
 	}
 	
 	public void storeTo(PreparedStatement stmt) throws SQLException {
@@ -221,6 +238,8 @@ public class Card {
 		stmt.setString(index++, attributeString);
 	
 		stmt.setString(index++, rarity.toString());
+		stmt.setInt(index++, maxUnlimitedCopies);
+		stmt.setInt(index++, maxBlockCopies);
 	}
 
 	@Override
