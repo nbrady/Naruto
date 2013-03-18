@@ -11,6 +11,10 @@
 		<servlet-class>org.naruto.servlet.DeckBuilderServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>DeckTesterServlet</servlet-name>
+		<servlet-class>org.naruto.servlet.DeckTesterServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>CardNameCompletion</servlet-name>
 		<servlet-class>org.naruto.servlet.CardNameCompletion</servlet-class>
 	</servlet>
@@ -19,6 +23,10 @@
 	<servlet-mapping>
 		<servlet-name>DeckBuilderServlet</servlet-name>
 		<url-pattern>deckBuilder</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DeckTesterServlet</servlet-name>
+		<url-pattern>deckTester</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CardNameCompletion</servlet-name>

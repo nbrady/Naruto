@@ -6,12 +6,14 @@ import java.util.Collections;
 public class Deck {
 	private ArrayList<Card> mainDeck; // 0 is top of the deck, size() is the bottom
 	private ArrayList<Card> sideDeck;
+	private ArrayList<Card> reinforcementDeck;
 	private ArrayList<String> errors; // this field is used to hold all the deck building rule violations
 	
 	// Creates an empty deck 
 	public Deck(){
 		mainDeck = new ArrayList<Card>();
 		sideDeck = new ArrayList<Card>();
+		reinforcementDeck = new ArrayList<Card>();
 		errors = new ArrayList<String>();
 	}
 	
@@ -35,6 +37,14 @@ public class Deck {
 
 	public ArrayList<Card> getSideDeck() {
 		return sideDeck;
+	}
+
+	public ArrayList<Card> getReinforcementDeck() {
+		return reinforcementDeck;
+	}
+
+	public void setReinforcementDeck(ArrayList<Card> reinforcementDeck) {
+		this.reinforcementDeck = reinforcementDeck;
 	}
 
 	public ArrayList<String> getErrors(){
@@ -88,22 +98,7 @@ public class Deck {
 	public void shuffleMainDeck(){
 		Collections.shuffle(mainDeck);
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-	    if (o == null || !(o instanceof Deck)) {
-	      return false;
-	    }
-	    Deck other = (Deck) o;
-	    if (mainDeck.equals(other.mainDeck) &&
-	    	sideDeck.equals(other.sideDeck) &&
-	    	errors.equals(other.errors)) { 
-	      return true;
-	    } else {
-	      return false;
-	    }
-	}
-	
+		
 	public boolean isBlockLegal(){
 		errors.clear();
 		
@@ -112,9 +107,17 @@ public class Deck {
 			errors.add("Main deck must be exactly 50 cards");
 		}
 		
+		// TODO: check to be sure main deck does not contain more than 3 cards of the same name
+		
+		
 		// check to be sure side deck is exactly 0 cards or 10 cards
 		if (sideDeck.size() != 0 && sideDeck.size() != 10){
 			errors.add("Side deck must be exactly 0 or 10 cards");
+		}
+		
+		// check to be sure the reinforcement deck is 15 or less cards
+		if (reinforcementDeck.size() > 15){
+			errors.add("Reinforcement deck must be 15 or less cards");
 		}
 		
 		// create combined deck
@@ -138,10 +141,6 @@ public class Deck {
 				processedCardNames.add(currentCard.getCardName());	
 			}
 		}
-		
-		// TODO: check to be sure no cards that are not block legal are played
-		
-		// TODO: check rogue list
 		
 		if (errors.isEmpty()){
 			return true;
@@ -180,5 +179,53 @@ public class Deck {
 		for(Card card : sideDeck){
 			System.out.println(card.toString());
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((errors == null) ? 0 : errors.hashCode());
+		result = prime * result
+				+ ((mainDeck == null) ? 0 : mainDeck.hashCode());
+		result = prime
+				* result
+				+ ((reinforcementDeck == null) ? 0 : reinforcementDeck
+						.hashCode());
+		result = prime * result
+				+ ((sideDeck == null) ? 0 : sideDeck.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Deck))
+			return false;
+		Deck other = (Deck) obj;
+		if (errors == null) {
+			if (other.errors != null)
+				return false;
+		} else if (!errors.equals(other.errors))
+			return false;
+		if (mainDeck == null) {
+			if (other.mainDeck != null)
+				return false;
+		} else if (!mainDeck.equals(other.mainDeck))
+			return false;
+		if (reinforcementDeck == null) {
+			if (other.reinforcementDeck != null)
+				return false;
+		} else if (!reinforcementDeck.equals(other.reinforcementDeck))
+			return false;
+		if (sideDeck == null) {
+			if (other.sideDeck != null)
+				return false;
+		} else if (!sideDeck.equals(other.sideDeck))
+			return false;
+		return true;
 	}
 }
