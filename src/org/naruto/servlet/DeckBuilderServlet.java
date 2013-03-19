@@ -15,7 +15,7 @@ import org.naruto.model.Deck;
 import org.naruto.model.persist.Database;
 
 public class DeckBuilderServlet extends HttpServlet{
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
@@ -69,16 +69,10 @@ private static final long serialVersionUID = 1L;
 			
 			else if (action.equals("removeCardFromMain")){
 				// Remove card from maindeck
+				System.out.println("Gets here");
 				try {
-					Card card = Database.getInstance().getCardById(requestId);
-					int removeQuantity = 1;
-					try {
-						removeQuantity = Integer.parseInt(req.getParameter("removeMainQuantityBox" + requestId));
-					} catch (NumberFormatException e){
-						// Quantity is not required
-					}
-					
-					controller.removeCardFromMain(card, removeQuantity);
+					Card card = Database.getInstance().getCardById(requestId);					
+					controller.removeCardFromMain(card, 1);
 				} catch (SQLException e){
 					e.printStackTrace();
 				}
@@ -87,15 +81,8 @@ private static final long serialVersionUID = 1L;
 			else if (action.equals("removeCardFromSide")){
 				// Remove card from sidedeck
 				try {
-					Card card = Database.getInstance().getCardById(requestId);
-					int removeQuantity = 1;
-					try {
-						removeQuantity = Integer.parseInt(req.getParameter("removeSideQuantityBox" + requestId));
-					} catch (NumberFormatException e){
-						// Quantity is not required
-					}
-					
-					controller.removeCardFromSide(card, removeQuantity);
+					Card card = Database.getInstance().getCardById(requestId);					
+					controller.removeCardFromSide(card, 1);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}	

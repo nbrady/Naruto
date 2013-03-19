@@ -37,7 +37,7 @@ public class DeckBuilderController {
 	}
 	
 	public Deck removeCardFromMain(Card card, int quantity) {
-		 for (int i = 0; i< quantity; i++){
+		 for (int i = 0; i < quantity; i++){
 			 deck.removeCardFromMainDeck(card);
 		 }
 		 
@@ -45,7 +45,7 @@ public class DeckBuilderController {
 	}
 	
 	public Deck removeCardFromSide(Card card, int quantity) {
-		 for (int i = 0; i< quantity; i++){
+		 for (int i = 0; i < quantity; i++){
 			 deck.removeCardFromSideDeck(card);
 		 }
 		 

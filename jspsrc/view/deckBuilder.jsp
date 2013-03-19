@@ -33,19 +33,17 @@
 				});
 				
 				$(".removeCardFromMain").click(function() {
-					alert(requestId);
 					requestId = $(this).attr('id').match(/(\d+)$/)[1];
-					alert(requestId);
 					$("#requestIdElt").attr('value', requestId);
 					$("#actionElt").attr('value', 'removeCardFromMain');
-					$("removeCardForm").submit();
+					$("addCardForm").submit();
 				});
 				
 				$(".removeCardFromSide").click(function() {
 					requestId = $(this).attr('id').match(/(\d+)$/)[1];
 					$("#requestIdElt").attr('value', requestId);
-					$("#actionElt").attr('value', 'addCardToSide');
-					$("removeCardForm").submit();
+					$("#actionElt").attr('value', 'removeCardFromSide');
+					$("addCardForm").submit();
 				});
 				
        			$("#cardNameElt").autocomplete({
@@ -67,8 +65,8 @@
 	</head>
 	
 	<body>
-		<div style="width: 47%; float: left;">
-			<form id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder" method="post">
+		<form id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder" method="post">
+			<div style="width: 47%; float: left;">
 				<input type="hidden" name="submitted" value="true" />
 				<input id="requestIdElt" type="hidden" name="requestId" value="-1" />
 				<input id="actionElt" type="hidden" name="action" value="" />
@@ -103,7 +101,7 @@
 							<th>Card Number</th>
 							<th>Image</th>
 							<th>Action</th>
-							<th>Quantity</th>
+							<th>Qty.</th>
 						</tr>
 						
 						<c:forEach var="card" items="${searchResults}">
@@ -118,16 +116,10 @@
 						</c:forEach>
 					</table>
 				</c:if>
-			</form>
-		</div>
+			</div>
 		
-		<p />
-		<div style="width: 47%; float: left; margin-left: 20px">
-			<form id="removeCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder" method="post">
-				<input type="hidden" name="submitted" value="true" />
-				<input id="requestIdElt" type="hidden" name="requestId" value="-1" />
-				<input id="actionElt" type="hidden" name="action" value="" />
-			
+			<p />
+			<div style="width: 47%; float: left; margin-left: 20px">			
 				<c:if test="${! empty errors}">
 					<c:forEach var="error" items="${errors}">
 						<span class="error">${error}<br /></span>
@@ -143,7 +135,6 @@
 						<th>Card Number</th>
 						<th>Image</th>
 						<th>Action</th>
-						<th>Quantity</th>
 					</tr>
 					<c:forEach var="mainCard" items="${deck.mainDeck}">
 						<tr>
@@ -151,7 +142,6 @@
 							<td>${mainCard.cardNumber}</td>
 							<td><img src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
 							<td><input name="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" type="submit" value="Remove Card" /></td>
-							<td><input type="text" name="removeMainQuantityBox${card.id}" size="2" value="${quantity}"/></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -164,7 +154,6 @@
 						<th>Card Name</th>
 						<th>Card Number</th>
 						<th>Image</th>
-						<th>Attribute</th>
 						<th>Action</th>
 					</tr>
 					<c:forEach var="sideCard" items="${deck.sideDeck}">
@@ -172,13 +161,11 @@
 							<td>${sideCard.cardName}</td>
 							<td>${sideCard.cardNumber}</td>
 							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
-							<td><input name="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>
-							<td><input type="text" name="removeSideQuantityBox${card.id}" size="2" value="${quantity}"/></td>
+							<td><input name="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>d>
 						</tr>
 					</c:forEach>
 				</table>
-			</form>
-		</div>
-	</body>
-	
+			</div>
+		</form>
+	</body>	
 </html>

@@ -150,6 +150,34 @@ public class Card {
 		this.maxBlockCopies = maxBlockCopies;
 	}
 
+	public boolean isNinja(){
+		if (cardNumber.startsWith("n")){
+			return true;
+		} else if (!healthyStats.equals("None") || !injuredStats.equals("None")){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isJutsu(){
+		return cardNumber.startsWith("j");
+		
+		// TODO: rethink this
+	}
+	
+	public boolean isMission(){
+		return cardNumber.startsWith("m");
+		
+		// TODO: rethink this
+	}
+	
+	public boolean isClient(){
+		return cardNumber.startsWith("c");
+		
+		// TODO: rethinkl this
+	}
+	
 	public void loadFrom(ResultSet resultSet) throws SQLException {
 		loadFrom(resultSet, 1);
 	}
