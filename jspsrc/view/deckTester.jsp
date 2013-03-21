@@ -21,6 +21,14 @@
 	<head>
 	
 	<body>
+		<table>
+			<tr>
+				<td><a href="/deckBuilder">Build Deck</a></td>
+				<td><a href="/deckTester">Test Deck</a></td>
+				<td><a href="/deckPrinter" target="_blank">Print Deck</a></td>
+			</tr>
+		</table>
+		<br />
 		<div id="player1" style="float:left; width: 100%;">
 			Hand: <br />
 			<c:forEach var="card" items="${hand.mainDeck}">

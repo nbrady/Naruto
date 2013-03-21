@@ -175,7 +175,7 @@ public class Card {
 	public boolean isClient(){
 		return cardNumber.startsWith("c");
 		
-		// TODO: rethinkl this
+		// TODO: rethink this
 	}
 	
 	public void loadFrom(ResultSet resultSet) throws SQLException {

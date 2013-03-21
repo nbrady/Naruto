@@ -3,16 +3,15 @@
 
 <html>
 	<head>
-		<title>Deck Builder</title>
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		
-		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-1.8.21.custom.css" />
-		<script type="text/javascript" src="/static/js/jquery-ui-1.8.21.custom.min.js"></script>
-		
+		<title>Deck Builder</title>		
+					
 		<style type="text/css">
 			label.error, .error {color: red;}
 		</style>
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>	
+		<script type="text/javascript" src="/static/js/jquery-ui-1.8.21.custom.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-1.8.21.custom.css" />
 		
 		<script type="text/javascript">
 			var requestId;
@@ -57,14 +56,19 @@
 						});
 					}
 				});
-				$("#addCardForm").validate();
-
        		});
-       	</script>
-          	
+       	</script>  	
 	</head>
 	
 	<body>
+		<table>
+			<tr>
+				<td><a href="/deckBuilder">Build Deck</a></td>
+				<td><a href="/deckTester">Test Deck</a></td>
+				<td><a href="/deckPrinter" target="_blank">Print Deck</a></td>
+			</tr>
+		</table>
+		<br />
 		<form id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder" method="post">
 			<div style="width: 47%; float: left;">
 				<input type="hidden" name="submitted" value="true" />
@@ -141,7 +145,7 @@
 							<td>${mainCard.cardName}</td>
 							<td>${mainCard.cardNumber}</td>
 							<td><img src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
-							<td><input name="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" type="submit" value="Remove Card" /></td>
+							<td><input id="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" type="submit" value="Remove Card" /></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -161,7 +165,7 @@
 							<td>${sideCard.cardName}</td>
 							<td>${sideCard.cardNumber}</td>
 							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
-							<td><input name="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>d>
+							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>d>
 						</tr>
 					</c:forEach>
 				</table>

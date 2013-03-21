@@ -21,7 +21,7 @@ public class DeckPrinterServlet extends HttpServlet{
 			deck = new Deck();
 		}
 		
-		// Separate by card type
+		// Separate main deck by card type
 		HashMap<Card, Integer> ninjas = new HashMap<Card, Integer>();
 		HashMap<Card, Integer> missions = new HashMap<Card, Integer>();
 		HashMap<Card, Integer> jutsus = new HashMap<Card, Integer>();
@@ -38,11 +38,17 @@ public class DeckPrinterServlet extends HttpServlet{
 			}
 		}
 		
+		// Separate sideboard
+		HashMap<Card, Integer> sideBoard = new HashMap<Card, Integer>();
+		for(Card card : deck.getSideDeck()){
+			sideBoard.put(card, deck.getNumberInSideDeck(card));
+		}
+		
 		req.setAttribute("ninjas", ninjas);
 		req.setAttribute("missions", missions);
 		req.setAttribute("jutsus", jutsus);
 		req.setAttribute("clients", clients);
-		
+		req.setAttribute("sideboard", sideBoard);
 		req.getRequestDispatcher("/view/deckPrinter.jsp").forward(req, resp);
 	}
 

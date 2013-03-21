@@ -238,4 +238,14 @@ public class Deck {
 		}
 		return occurences;
 	}
+	
+	public int getNumberInSideDeck(Card card){
+		int occurences = 0;
+		for (Card c : sideDeck){
+			if (c.equals(card)){
+				occurences++;
+			}
+		}
+		return occurences;
+	}
 }
