@@ -165,7 +165,7 @@
 							<td>${sideCard.cardName}</td>
 							<td>${sideCard.cardNumber}</td>
 							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
-							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>d>
+							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>
 						</tr>
 					</c:forEach>
 				</table>

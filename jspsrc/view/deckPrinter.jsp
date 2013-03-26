@@ -10,6 +10,10 @@
 				font-size: 10px;
 				border-collapse: collapse;
 			}			
+			
+			tr, td {
+				height: 16px;
+			}
 		</style>
 	</head>
 	
@@ -23,7 +27,7 @@
 			<b>Naruto CCG Player Deck List</b>
 		</div>
 		
-		<div style="position: absolute; top: 130px; width: 100%; font-size: 10px;">
+		<div style="position: absolute; top: 132px; width: 100%; font-size: 10px;">
 			<table style="width: 33%; float: left;">
 				<c:if test="${empty ninjas}"> 
 					<tr>
@@ -83,7 +87,7 @@
 					</c:if>
 				</table>
 				
-				<table style="width: 100%; margin-top: 212px;">
+				<table style="width: 100%; margin-top: 194px;">
 					<c:if test="${empty clients}"> 
 						<tr>
 							<td style="width: 20%; text-align: center;">&nbsp;</td>
@@ -102,7 +106,7 @@
 					</c:if>
 				</table>
 				
-				<table style="width: 100%; margin-top: 120px;">
+				<table style="width: 100%; margin-top: 126px;">
 					<c:if test="${empty sideboard}"> 
 						<tr>
 							<td style="width: 20%; text-align: center;">&nbsp;</td>
@@ -133,16 +137,6 @@
 					<th style="width: 20%;">Card #</th>
 					<th style="width: 60%;">Card Name</th>
 					<th style="width: 20%">Qty.</th>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -426,17 +420,7 @@
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-				
+
 				<tr>
 					<th colspan="3">Reinforcement Deck*</th>
 				</tr>
@@ -505,16 +489,6 @@
 					<th style="width: 20%;">Card #</th>
 					<th style="width: 60%;">Card Name</th>
 					<th style="width: 20%">Qty.</th>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
