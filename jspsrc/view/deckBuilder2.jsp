@@ -115,7 +115,7 @@
 						<c:forEach var="result" items="${searchResults}">
 							<tr>
 								<c:forEach var="card" items="${result}">
-									<td><input type="image" id="addCardToMainButton${card.id}" class="addCardToMain" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
+									<td><input style="width: 62px; height: 87px;" type="image" id="addCardToMainButton${card.id}" class="addCardToMain" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
 								</c:forEach>
 							</tr>
 						</c:forEach>
@@ -124,7 +124,7 @@
 			</div>
 		
 			<p />
-			<div style="width: 47%; float: left; margin-left: 20px">			
+			<div style="width: 50%; float: left; margin-left: 20px">			
 				<c:if test="${! empty errors}">
 					<c:forEach var="error" items="${errors}">
 						<span class="error">${error}<br /></span>
@@ -134,20 +134,13 @@
 				<br />
 				
 				Main Deck:
-				<table border=1 style="width: 100%; text-align: center;">
-					<tr>
-						<th>Card Name</th>
-						<th>Card Number</th>
-						<th>Image</th>
-						<th>Action</th>
-					</tr>
-					<c:forEach var="mainCard" items="${deck.mainDeck}">
+				<table border=1 style="text-align: center;">
+					<c:forEach var="row" items="${mainDeck}">	
 						<tr>
-							<td>${mainCard.cardName}</td>
-							<td>${mainCard.cardNumber}</td>
-							<td><img src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
-							<td><input id="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" type="submit" value="Remove Card" /></td>
-						</tr>
+							<c:forEach var="mainCard" items="${row}">
+								<td><img style="width: 62px; heights: 87px;" src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
+							</c:forEach>
+						</tr>	
 					</c:forEach>
 				</table>
 				
@@ -166,11 +159,15 @@
 							<td>${sideCard.cardName}</td>
 							<td>${sideCard.cardNumber}</td>
 							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
-							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>d>
+							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>
 						</tr>
 					</c:forEach>
 				</table>
+				
+				<input name="sortButton" type="submit" value="Sort Deck" />
 			</div>
-		</form>
+			
+			<iframe style="width: 25%; height: 90%; position: absolute;" src="http://www.bandai.com/naruto/cardlists_detail.php?c=c001#card"></iframe>
+		</form>		
 	</body>	
 </html>

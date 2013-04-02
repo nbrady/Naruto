@@ -24,7 +24,6 @@ public class DeckBuilderServlet2 extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		System.out.println("Gets here");
 		// Get current deck 
 		Deck deck = (Deck) req.getSession().getAttribute("deck");
 		if (deck == null){
@@ -41,9 +40,7 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			// Parse fields
 			String action = req.getParameter("action");
 			int requestId = Integer.parseInt(req.getParameter("requestId"));
-			
-			System.out.println(action);
-			System.out.println(requestId);
+	
 			int quantity = 1; // Default quantity is 1
 			try {
 				quantity = Integer.parseInt(req.getParameter("quantityBox" + requestId));
@@ -73,7 +70,6 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			
 			else if (action.equals("removeCardFromMain")){
 				// Remove card from maindeck
-				System.out.println("Gets here");
 				try {
 					Card card = Database.getInstance().getCardById(requestId);					
 					controller.removeCardFromMain(card, 1);
@@ -94,28 +90,54 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			
 			else if (req.getParameter("searchButton") != null) {
 				ArrayList<Card> results = controller.searchForMatches(req);
-				ArrayList<ArrayList<Card>> searchResults = new ArrayList<ArrayList<Card>>();
-				ArrayList<Card> temp = new ArrayList<Card>();
-				int j = 0;
-				for (int i = 0; i < results.size(); i++){
-					if (j == 4){
-						searchResults.add(temp);
-						temp = new ArrayList<Card>();
-						j = 0;
+				if (results != null){
+					ArrayList<ArrayList<Card>> searchResults = new ArrayList<ArrayList<Card>>();
+					ArrayList<Card> temp = new ArrayList<Card>();
+					int j = 0;
+					for (int i = 0; i < results.size(); i++){
+						if (j == 4){
+							searchResults.add(temp);
+							temp = new ArrayList<Card>();
+							j = 0;
+						}
+						temp.add(results.get(i));
+						j++;
 					}
-					temp.add(results.get(i));
-					j++;
+					searchResults.add(temp);
+								
+					req.getSession().setAttribute("searchResults", searchResults);
 				}
-				searchResults.add(temp);
-				
-				req.setAttribute("searchResults", searchResults);
+			}
+			
+			else if (req.getParameter("sortButton") != null) {
+				controller.sortDeck();
 			}
 			
 			// Check the deck for errors
 			ArrayList<String> errors = controller.getDeckErrors();
 			
-			// set request attributes
-			req.getSession().setAttribute("deck", controller.getDeck());
+			// set deck
+			Deck tempDeck = controller.getDeck();
+			
+			// Main deck
+			ArrayList<ArrayList<Card>> mainDeck = new ArrayList<ArrayList<Card>>();
+			ArrayList<Card> temp = new ArrayList<Card>();
+			int j = 0;
+			for (int i = 0; i < tempDeck.getMainDeck().size(); i++){
+				if (j == 10){
+					mainDeck.add(temp);
+					temp = new ArrayList<Card>();
+					j = 0;
+				}
+				temp.add(deck.getMainDeck().get(i));
+				j++;
+			}
+			mainDeck.add(temp);
+			
+			req.getSession().setAttribute("mainDeck", mainDeck);
+			
+			// set other attributes
+			req.getSession().setAttribute("deck", deck);
 			req.setAttribute("errors", errors);
 			
 			req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);

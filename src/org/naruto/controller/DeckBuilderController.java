@@ -2,6 +2,8 @@ package org.naruto.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,4 +97,50 @@ public class DeckBuilderController {
 		return null;
 	}
 
+	public void sortDeck() {
+		Collections.sort(deck.getMainDeck(), new Comparator<Card>() {
+
+	        public int compare(Card o1, Card o2) {	        	
+	            String x1 = ((Card) o1).getCardName();
+	            String x2 = ((Card) o2).getCardName();
+	            int sComp = x1.compareTo(x2);
+
+	            if (sComp != 0) {
+	               return sComp;
+	            } else {
+	               String x3 = ((Card) o1).getCardNumber();
+	               String x4 = ((Card) o2).getCardNumber();
+	               return x3.compareTo(x4);
+	            }
+	        }
+		});	
+		
+		//sort by card type
+		ArrayList<Card> sortedMainDeck =  new ArrayList<Card>();
+		for (Card card : deck.getMainDeck()){
+			if (card.isNinja()){
+				sortedMainDeck.add(card);
+			}
+		}
+		
+		for (Card card : deck.getMainDeck()){
+			if (card.isJutsu()){
+				sortedMainDeck.add(card);
+			}
+		}
+		
+		for (Card card : deck.getMainDeck()){
+			if (card.isMission()){
+				sortedMainDeck.add(card);
+			}
+		}
+		
+		for (Card card : deck.getMainDeck()){
+			if (card.isClient()){
+				sortedMainDeck.add(card);
+			}
+		}
+		
+		deck.setMainDeck(sortedMainDeck);
+	}
 }

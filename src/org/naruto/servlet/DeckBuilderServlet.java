@@ -90,7 +90,7 @@ public class DeckBuilderServlet extends HttpServlet{
 			
 			else if (req.getParameter("searchButton") != null) {
 				ArrayList<Card> searchResults = controller.searchForMatches(req);
-				req.setAttribute("searchResults", searchResults);
+				req.getSession().setAttribute("searchResults", searchResults);
 			}
 			
 			// Check the deck for errors
