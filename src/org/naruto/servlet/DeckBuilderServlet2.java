@@ -3,6 +3,7 @@ package org.naruto.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,9 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			// Parse fields
 			String action = req.getParameter("action");
 			int requestId = Integer.parseInt(req.getParameter("requestId"));
-	
+			
+			System.out.println("Action: " + action);
+			
 			int quantity = 1; // Default quantity is 1
 			try {
 				quantity = Integer.parseInt(req.getParameter("quantityBox" + requestId));
@@ -91,6 +94,17 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			else if (req.getParameter("searchButton") != null) {
 				ArrayList<Card> results = controller.searchForMatches(req);
 				if (results != null){
+					// remove cards that are not legal from search results
+					// TODO: change to allow unlimited format
+					Iterator<Card> iterator = results.iterator();
+					while (iterator.hasNext()){
+						Card card = iterator.next();
+						if (card.getMaxBlockCopies() == 0){
+							iterator.remove();
+						}
+					}
+					
+					// prepare the results to be displayed in rows of 4
 					ArrayList<ArrayList<Card>> searchResults = new ArrayList<ArrayList<Card>>();
 					ArrayList<Card> temp = new ArrayList<Card>();
 					int j = 0;
@@ -116,10 +130,8 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			// Check the deck for errors
 			ArrayList<String> errors = controller.getDeckErrors();
 			
-			// set deck
+			// prepare main deck to be displayed in rows of 10
 			Deck tempDeck = controller.getDeck();
-			
-			// Main deck
 			ArrayList<ArrayList<Card>> mainDeck = new ArrayList<ArrayList<Card>>();
 			ArrayList<Card> temp = new ArrayList<Card>();
 			int j = 0;

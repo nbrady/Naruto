@@ -17,11 +17,28 @@
 			var requestId;
 		
        		$(document).ready(function() {
-       			$(".addCardToMain").click(function() {
-					requestId = $(this).attr('id').match(/(\d+)$/)[1];
-					$("#requestIdElt").attr('value', requestId);
-					$("#actionElt").attr('value', 'addCardToMain');
-					$("addCardForm").submit();
+				$('.addCardToMain').mousedown(function(event) {
+					switch (event.which) {
+				        case 1:
+				        	requestId = $(this).attr('id').match(/(\d+)$/)[1];
+							$("#requestIdElt").attr('value', requestId);
+							$("#actionElt").attr('value', 'addCardToMain');
+							$("addCardForm").submit();
+				            break;
+				        case 2:
+				            alert('Middle mouse button pressed');
+				            break;
+				        case 3:
+				        	alert('right mouse button pressed');				        	
+				        	requestId = $(this).attr('id').match(/(\d+)$/)[1];
+							$("#requestIdElt").attr('value', requestId);
+							$("#actionElt").attr('value', 'addCardToSide');
+							$("addCardForm").submit();
+							alert('right mouse button pressed');
+				            break;
+				        default:
+				            alert('You have a strange mouse');
+				    }
 				});
 				
 				$(".addCardToSide").click(function() {
@@ -59,17 +76,6 @@
 							
        		});
        	</script>  	
-       	
-       	<script type="text/javascript">
-       	  	function addCard(str){
-       	  		alert("gets here");
-         		requestId = str;
-         		alert(requestId);
-				$("#requestIdElt").attr('value', requestId);
-				$("#actionElt").attr('value', 'addCardToMain');
-				$("addCardForm").submit();
-          	}
-        </script>
 	</head>
 	
 	<body>
@@ -111,11 +117,11 @@
 				</c:if>
 				
 				<c:if test="${! empty searchResults}"> 
-					<table border=1 style="width: 100%; text-align: center; border-collapse: collapse;">						
+					<table border=1 style="text-align: center; border-collapse: collapse;">						
 						<c:forEach var="result" items="${searchResults}">
 							<tr>
 								<c:forEach var="card" items="${result}">
-									<td><input style="width: 62px; height: 87px;" type="image" id="addCardToMainButton${card.id}" class="addCardToMain" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
+									<td><input oncontextmenu="return false" style="width: 62px; height: 87px;" type="image" id="addCardToMainButton${card.id}" class="addCardToMain" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
 								</c:forEach>
 							</tr>
 						</c:forEach>
@@ -134,15 +140,18 @@
 				<br />
 				
 				Main Deck:
-				<table border=1 style="text-align: center;">
-					<c:forEach var="row" items="${mainDeck}">	
-						<tr>
-							<c:forEach var="mainCard" items="${row}">
-								<td><img style="width: 62px; heights: 87px;" src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
-							</c:forEach>
-						</tr>	
-					</c:forEach>
-				</table>
+				
+				<c:if test="${! empty mainDeck}">
+					<table border=1 style="text-align: center; border-collapse: collapse;">
+						<c:forEach var="row" items="${mainDeck}">	
+							<tr>
+								<c:forEach var="mainCard" items="${row}">
+									<td><input style="width: 62px; height: 87px;" type="image" id="removeCardFromMainButton${mainCard.id}" class="removeCardFromMain" src="/static/card_images/${mainCard.cardNumber}_t.jpg" /></td>
+								</c:forEach>
+							</tr>	
+						</c:forEach>
+					</table>
+				</c:if>
 				
 				<br />
 				

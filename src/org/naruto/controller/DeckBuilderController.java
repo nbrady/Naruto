@@ -100,18 +100,38 @@ public class DeckBuilderController {
 	public void sortDeck() {
 		Collections.sort(deck.getMainDeck(), new Comparator<Card>() {
 
-	        public int compare(Card o1, Card o2) {	        	
-	            String x1 = ((Card) o1).getCardName();
-	            String x2 = ((Card) o2).getCardName();
-	            int sComp = x1.compareTo(x2);
+	        public int compare(Card card1, Card card2) {	 
+	        	// sort by card name
+	            String cardName1 = ((Card) card1).getCardName();
+	            String cardName2 = ((Card) card2).getCardName();
+	            int nameComparison = cardName1.compareTo(cardName2);
 
-	            if (sComp != 0) {
-	               return sComp;
+	            if (nameComparison != 0) {
+	               return nameComparison;
 	            } else {
-	               String x3 = ((Card) o1).getCardNumber();
-	               String x4 = ((Card) o2).getCardNumber();
-	               return x3.compareTo(x4);
+	            	// sort by card number
+	               String cardNumber1 = ((Card) card1).getCardNumber();
+	               String cardNumber2 = ((Card) card2).getCardNumber();
+	               return cardNumber1.compareTo(cardNumber2);
 	            }
+	        }
+		});	
+		
+		// sort by entrance cost
+		Collections.sort(deck.getMainDeck(), new Comparator<Card>() {
+
+	        public int compare(Card card1, Card card2) {	 
+	        	if (card1.isJutsu() && card2.isJutsu()){
+	        		return 0;
+	        	} else if (card1.isJutsu()){
+	        		return -1;
+	        	} else if (card2.isJutsu()){
+	        		return 1;
+	        	} else {
+		            int turnCost1 = Integer.parseInt(((Card) card1).getTurnChakraCost());
+		            int turnCost2 = Integer.parseInt(((Card) card2).getTurnChakraCost());
+		            return Integer.compare(turnCost1, turnCost2);
+	        	}
 	        }
 		});	
 		
