@@ -17,37 +17,31 @@
 			var requestId;
 		
        		$(document).ready(function() {
-				$('.addCardToMain').mousedown(function(event) {
+				$('.addCard').mousedown(function(event) {
 					switch (event.which) {
 				        case 1:
 				        	requestId = $(this).attr('id').match(/(\d+)$/)[1];
 							$("#requestIdElt").attr('value', requestId);
 							$("#actionElt").attr('value', 'addCardToMain');
-							$("addCardForm").submit();
+							document.addCardForm.submit();
 				            break;
 				        case 2:
-				            alert('Middle mouse button pressed');
+				            requestId = $(this).attr('id').match(/(\d+)$/)[1];
+							$("#requestIdElt").attr('value', requestId);
+							$("#actionElt").attr('value', 'addCardToReinforcement');
+							document.addCardForm.submit();
 				            break;
-				        case 3:
-				        	alert('right mouse button pressed');				        	
+				        case 3:				        	
 				        	requestId = $(this).attr('id').match(/(\d+)$/)[1];
 							$("#requestIdElt").attr('value', requestId);
 							$("#actionElt").attr('value', 'addCardToSide');
-							$("addCardForm").submit();
-							alert('right mouse button pressed');
+							document.addCardForm.submit();
 				            break;
 				        default:
 				            alert('You have a strange mouse');
 				    }
 				});
-				
-				$(".addCardToSide").click(function() {
-					requestId = $(this).attr('id').match(/(\d+)$/)[1];
-					$("#requestIdElt").attr('value', requestId);
-					$("#actionElt").attr('value', 'addCardToSide');
-					$("addCardForm").submit();
-				});
-				
+								
 				$(".removeCardFromMain").click(function() {
 					requestId = $(this).attr('id').match(/(\d+)$/)[1];
 					$("#requestIdElt").attr('value', requestId);
@@ -59,6 +53,13 @@
 					requestId = $(this).attr('id').match(/(\d+)$/)[1];
 					$("#requestIdElt").attr('value', requestId);
 					$("#actionElt").attr('value', 'removeCardFromSide');
+					$("addCardForm").submit();
+				});
+				
+				$(".removeCardFromReinforcement").click(function() {
+					requestId = $(this).attr('id').match(/(\d+)$/)[1];
+					$("#requestIdElt").attr('value', requestId);
+					$("#actionElt").attr('value', 'removeCardFromReinforcement');
 					$("addCardForm").submit();
 				});
 				
@@ -87,7 +88,7 @@
 			</tr>
 		</table>
 		<br />
-		<form id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder2" method="post">
+		<form name="addCardForm" id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder2" method="post">
 			<div style="width: 25%; height: 90%; float: left;  border: 1px solid black; overflow-y: scroll;">
 				<input type="hidden" name="submitted" value="true" />
 				<input id="requestIdElt" type="hidden" name="requestId" value="-1" />
@@ -121,7 +122,7 @@
 						<c:forEach var="result" items="${searchResults}">
 							<tr>
 								<c:forEach var="card" items="${result}">
-									<td><input oncontextmenu="return false" style="width: 62px; height: 87px;" type="image" id="addCardToMainButton${card.id}" class="addCardToMain" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
+									<td><input oncontextmenu="return false" style="width: 62px; height: 87px;" type="image" id="addCardButton${card.id}" class="addCard" src="/static/card_images/${card.cardNumber}_t.jpg" /></td>
 								</c:forEach>
 							</tr>
 						</c:forEach>
@@ -130,7 +131,7 @@
 			</div>
 		
 			<p />
-			<div style="width: 50%; float: left; margin-left: 20px">			
+			<div style="width: 60%; float: left; margin-left: 20px">			
 				<c:if test="${! empty errors}">
 					<c:forEach var="error" items="${errors}">
 						<span class="error">${error}<br /></span>
@@ -153,30 +154,49 @@
 					</table>
 				</c:if>
 				
+				<c:if test="${ empty mainDeck}">
+					<p>No cards in main deck.</p>
+				</c:if>
+				
 				<br />
 				
 				Side Deck:
-				<table border=1 style="width: 100%; text-align: center;">
-					<tr>
-						<th>Card Name</th>
-						<th>Card Number</th>
-						<th>Image</th>
-						<th>Action</th>
-					</tr>
-					<c:forEach var="sideCard" items="${deck.sideDeck}">
+				<c:if test="${! empty deck.sideDeck}">
+					<table border=1 style="text-align: center; border-collapse: collapse;">
 						<tr>
-							<td>${sideCard.cardName}</td>
-							<td>${sideCard.cardNumber}</td>
-							<td><img src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
-							<td><input id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" type="submit" value="Remove Card" /></td>
-						</tr>
-					</c:forEach>
-				</table>
+							<c:forEach var="sideCard" items="${deck.sideDeck}">
+								<td><input style="width: 62px; height: 87px;" type="image" id="removeCardFromSideButton${sideCard.id}" class="removeCardFromSide" src="/static/card_images/${sideCard.cardNumber}_t.jpg" /></td>
+							</c:forEach>
+						</tr>	
+					</table>
+				</c:if>
 				
+				<c:if test="${ empty deck.sideDeck}">
+					<p>No cards in side deck.</p>
+				</c:if>
+				
+				<br />
+				
+				Reinforcement Deck:
+				<c:if test="${! empty deck.reinforcementDeck}">
+					<table border=1 style="text-align: center; border-collapse: collapse;">
+						<tr>
+							<c:forEach var="reinforcementCard" items="${deck.reinforcementDeck}">
+								<td><input style="width: 62px; height: 87px;" type="image" id="removeCardFromReinforcementButton${reinforcementCard.id}" class="removeCardFromReinforcement" src="/static/card_images/${reinforcementCard.cardNumber}_t.jpg" /></td>
+							</c:forEach>
+						</tr>	
+					</table>
+				</c:if>
+				
+				<c:if test="${ empty deck.reinforcementDeck}">
+					<p>No cards in reinforcement deck.</p>
+				</c:if>
+				
+				<br />
 				<input name="sortButton" type="submit" value="Sort Deck" />
+				
+				<iframe style="width: 20%; height: 90%; position: absolute; left: 1520px; top: 90px;" src="http://www.bandai.com/naruto/cardlists_detail.php?c=c001#card"></iframe>
 			</div>
-			
-			<iframe style="width: 25%; height: 90%; position: absolute;" src="http://www.bandai.com/naruto/cardlists_detail.php?c=c001#card"></iframe>
 		</form>		
 	</body>	
 </html>

@@ -38,6 +38,14 @@ public class DeckBuilderController {
 		return deck;
 	}
 	
+	public Deck addCardToReinforcement(Card card, int quantity){
+		for (int i = 0; i < quantity; i++){
+			deck.addCardToReinforcementDeck(card);
+		}
+		
+		return deck;
+	}
+	
 	public Deck removeCardFromMain(Card card, int quantity) {
 		 for (int i = 0; i < quantity; i++){
 			 deck.removeCardFromMainDeck(card);
@@ -49,6 +57,14 @@ public class DeckBuilderController {
 	public Deck removeCardFromSide(Card card, int quantity) {
 		 for (int i = 0; i < quantity; i++){
 			 deck.removeCardFromSideDeck(card);
+		 }
+		 
+		 return deck;
+	}
+	
+	public Deck removeCardFromReinforcement(Card card, int quantity) {
+		 for (int i = 0; i < quantity; i++){
+			 deck.removeCardFromReinforcementDeck(card);
 		 }
 		 
 		 return deck;
@@ -162,5 +178,43 @@ public class DeckBuilderController {
 		}
 		
 		deck.setMainDeck(sortedMainDeck);
+		
+		Collections.sort(deck.getSideDeck(), new Comparator<Card>() {
+
+	        public int compare(Card card1, Card card2) {	 
+	        	// sort by card name
+	            String cardName1 = ((Card) card1).getCardName();
+	            String cardName2 = ((Card) card2).getCardName();
+	            int nameComparison = cardName1.compareTo(cardName2);
+
+	            if (nameComparison != 0) {
+	               return nameComparison;
+	            } else {
+	            	// sort by card number
+	               String cardNumber1 = ((Card) card1).getCardNumber();
+	               String cardNumber2 = ((Card) card2).getCardNumber();
+	               return cardNumber1.compareTo(cardNumber2);
+	            }
+	        }
+		});	
+				
+		Collections.sort(deck.getReinforcementDeck(), new Comparator<Card>() {
+
+	        public int compare(Card card1, Card card2) {	 
+	        	// sort by card name
+	            String cardName1 = ((Card) card1).getCardName();
+	            String cardName2 = ((Card) card2).getCardName();
+	            int nameComparison = cardName1.compareTo(cardName2);
+
+	            if (nameComparison != 0) {
+	               return nameComparison;
+	            } else {
+	            	// sort by card number
+	               String cardNumber1 = ((Card) card1).getCardNumber();
+	               String cardNumber2 = ((Card) card2).getCardNumber();
+	               return cardNumber1.compareTo(cardNumber2);
+	            }
+	        }
+		});
 	}
 }

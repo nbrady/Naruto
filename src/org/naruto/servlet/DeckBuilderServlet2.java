@@ -41,9 +41,7 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			// Parse fields
 			String action = req.getParameter("action");
 			int requestId = Integer.parseInt(req.getParameter("requestId"));
-			
-			System.out.println("Action: " + action);
-			
+						
 			int quantity = 1; // Default quantity is 1
 			try {
 				quantity = Integer.parseInt(req.getParameter("quantityBox" + requestId));
@@ -52,7 +50,7 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			}
 			
 			if (action.equals("addCardToMain")){
-				// Add card to maindeck
+				// Add card to main deck
 				try {
 					Card card = Database.getInstance().getCardById(requestId);
 					controller.addCardToMain(card, quantity);
@@ -62,7 +60,7 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			} 
 			
 			else if (action.equals("addCardToSide")){
-				// Add card to sidedeck
+				// Add card to side deck
 				try {
 					Card card = Database.getInstance().getCardById(requestId);
 					controller.addCardToSide(card, quantity);
@@ -71,8 +69,18 @@ public class DeckBuilderServlet2 extends HttpServlet{
 				}	
 			} 
 			
+			else if (action.equals("addCardToReinforcement")){
+				// Add card to reinforcement deck
+				try {
+					Card card = Database.getInstance().getCardById(requestId);
+					controller.addCardToReinforcement(card, quantity);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}	
+			} 
+			
 			else if (action.equals("removeCardFromMain")){
-				// Remove card from maindeck
+				// Remove card from main deck
 				try {
 					Card card = Database.getInstance().getCardById(requestId);					
 					controller.removeCardFromMain(card, 1);
@@ -82,10 +90,20 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			} 
 			
 			else if (action.equals("removeCardFromSide")){
-				// Remove card from sidedeck
+				// Remove card from side deck
 				try {
 					Card card = Database.getInstance().getCardById(requestId);					
 					controller.removeCardFromSide(card, 1);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}	
+			} 
+			
+			else if (action.equals("removeCardFromReinforcement")){
+				// Remove card from reinforcement deck
+				try {
+					Card card = Database.getInstance().getCardById(requestId);					
+					controller.removeCardFromReinforcement(card, 1);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}	
@@ -132,21 +150,23 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			
 			// prepare main deck to be displayed in rows of 10
 			Deck tempDeck = controller.getDeck();
-			ArrayList<ArrayList<Card>> mainDeck = new ArrayList<ArrayList<Card>>();
-			ArrayList<Card> temp = new ArrayList<Card>();
-			int j = 0;
-			for (int i = 0; i < tempDeck.getMainDeck().size(); i++){
-				if (j == 10){
-					mainDeck.add(temp);
-					temp = new ArrayList<Card>();
-					j = 0;
+			if (!tempDeck.isMainDeckEmpty()){
+				ArrayList<ArrayList<Card>> mainDeck = new ArrayList<ArrayList<Card>>();
+				ArrayList<Card> temp = new ArrayList<Card>();
+				int j = 0;
+				for (int i = 0; i < tempDeck.getMainDeck().size(); i++){
+					if (j == 10){
+						mainDeck.add(temp);
+						temp = new ArrayList<Card>();
+						j = 0;
+					}
+					temp.add(deck.getMainDeck().get(i));
+					j++;
 				}
-				temp.add(deck.getMainDeck().get(i));
-				j++;
+				mainDeck.add(temp);
+				
+				req.getSession().setAttribute("mainDeck", mainDeck);
 			}
-			mainDeck.add(temp);
-			
-			req.getSession().setAttribute("mainDeck", mainDeck);
 			
 			// set other attributes
 			req.getSession().setAttribute("deck", deck);

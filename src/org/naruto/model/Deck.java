@@ -79,6 +79,10 @@ public class Deck {
 		return sideDeck.get(index);
 	}
 	
+	public Card getCardFromReinforcementDeck(int index){
+		return reinforcementDeck.get(index);
+	}
+	
 	public void addCardToMainDeck(Card card){
 		mainDeck.add(card);
 	}
@@ -95,6 +99,14 @@ public class Deck {
 		sideDeck.remove(card);
 	}
 	
+	public void addCardToReinforcementDeck(Card card){
+		reinforcementDeck.add(card);
+	}
+	
+	public void removeCardFromReinforcementDeck(Card card){
+		reinforcementDeck.remove(card);
+	}
+	
 	public void shuffleMainDeck(){
 		Collections.shuffle(mainDeck);
 	}
@@ -106,9 +118,6 @@ public class Deck {
 		if (mainDeck.size() != 50){
 			errors.add("Main deck must be exactly 50 cards");
 		}
-		
-		// TODO: check to be sure main deck does not contain more than 3 cards of the same name
-		
 		
 		// check to be sure side deck is exactly 0 cards or 10 cards
 		if (sideDeck.size() != 0 && sideDeck.size() != 10){
@@ -142,6 +151,25 @@ public class Deck {
 			}
 		}
 		
+		// make sure the main deck and side deck do not contain any reinforcements
+		for (Card card : mainDeck){
+			if (card.getCharacteristics().contains("REINFORCEMENT")){
+				errors.add("Reinforcement found in main deck: "+ card.getCardName());
+			}
+		}
+		for (Card card : sideDeck){
+			if (card.getCharacteristics().contains("REINFORCEMENT")){
+				errors.add("Reinforcement found in side deck: "+ card.getCardName());
+			}
+		}
+		
+		// make sure the reinforcement deck contains only reinforcements
+		for (Card card : reinforcementDeck){
+			if (!card.getCharacteristics().contains("REINFORCEMENT")){
+				errors.add("Non-reinforcement found in reinforcement deck: "+ card.getCardName());
+			}
+		}
+			
 		if (errors.isEmpty()){
 			return true;
 		} else {
@@ -175,8 +203,14 @@ public class Deck {
 		for(Card card: mainDeck){
 			System.out.println(card.toString());
 		}
+		
 		System.out.println("Side Deck:");
 		for(Card card : sideDeck){
+			System.out.println(card.toString());
+		}
+		
+		System.out.println("Reinforcement Deck:");
+		for(Card card : reinforcementDeck){
 			System.out.println(card.toString());
 		}
 	}
