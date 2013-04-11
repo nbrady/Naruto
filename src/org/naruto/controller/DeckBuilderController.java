@@ -80,37 +80,62 @@ public class DeckBuilderController {
 	
 	public ArrayList<Card> searchForMatches(HttpServletRequest req){
 		try {
-			String cardName = req.getParameter("cardNameBox");
-			String cardNumber = req.getParameter("cardNumberBox");
+//			String cardName = req.getParameter("cardNameBox");
+//			String cardNumber = req.getParameter("cardNumberBox");
+//			
+//			// Search for matching cards
+//			if (!cardNumber.equals("") && !cardName.equals("")){
+//	
+//				// Search based on card number
+//				ArrayList<Card> searchResults = new ArrayList<Card>();
+//				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
+//				
+//				// Make sure the card name also matches
+//				if (searchResults.get(0) != null && searchResults.get(0).getCardName().equals(cardName)){
+//					return searchResults;
+//				}	
+//			} else if (!cardNumber.equals("")){
+//				// Search based on card number
+//				ArrayList<Card> searchResults = new ArrayList<Card>();
+//				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
+//				
+//				if (searchResults.get(0) != null) {
+//					return searchResults;
+//				}
+//			} else if (!cardName.equals("")) {
+//				// Search based on card name
+//				return Database.getInstance().getCardsByCardName(cardName);	
+//			}
 			
-			// Search for matching cards
-			if (!cardNumber.equals("") && !cardName.equals("")){
-	
-				// Search based on card number
-				ArrayList<Card> searchResults = new ArrayList<Card>();
-				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
-				
-				// Make sure the card name also matches
-				if (searchResults.get(0) != null && searchResults.get(0).getCardName().equals(cardName)){
-					return searchResults;
-				}	
-			} else if (!cardNumber.equals("")){
-				// Search based on card number
-				ArrayList<Card> searchResults = new ArrayList<Card>();
-				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
-				
-				if (searchResults.get(0) != null) {
-					return searchResults;
-				}
-			} else if (!cardName.equals("")) {
-				// Search based on card name
-				return Database.getInstance().getCardsByCardName(cardName);	
-			}
+			// create card object
+			Card card = populateCardFromRequest(req);
+			return Database.getInstance().searchForCardMatches(card);
 		} catch (SQLException e) {
 				e.printStackTrace();
 			
 		}
 		return null;
+	}
+
+	private Card populateCardFromRequest(HttpServletRequest req) {
+		// Create card
+		Card card = new Card();
+		card.setCardName(req.getParameter("cardNameBox"));
+		card.setCardNumber(req.getParameter("cardNumberBox"));
+		card.addAttribute(req.getParameter("combatAttributeBox"));
+		card.addCharacteristic(req.getParameter("characteristicBox"));
+		card.setEffect(req.getParameter("effectBox"));
+		if (!req.getParameter("elementBox").equals("NONE")){
+			card.addElement(req.getParameter("elementBox"));
+		} 
+		if (!req.getParameter("turnCostBox").equals("NONE")){
+			card.setTurnChakraCost(req.getParameter("turnCostBox"));
+		} 
+		if (!req.getParameter("handCostBox").equals("NONE")){
+			card.setHandCost(Integer.parseInt(req.getParameter("handCostBox")));
+		} 
+		
+		return card;
 	}
 
 	public void sortDeck() {

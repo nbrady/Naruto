@@ -70,6 +70,13 @@ public class Card {
 		this.elements = elements;
 	}
 
+	public void addElement(String elementString){
+		for (Element element : Element.values()){
+			if (elementString.equalsIgnoreCase(element.toString())){
+				elements.add(element);
+			}
+		}
+	}
 	public String getTurnChakraCost() {
 		return turnChakraCost;
 	}
@@ -92,6 +99,10 @@ public class Card {
 
 	public void setCharacteristics(ArrayList<String> characteristics) {
 		this.characteristics = characteristics;
+	}
+	
+	public void addCharacteristic(String characteristic){
+		characteristics.add(characteristic);
 	}
 
 	public String getHealthyStats() {
@@ -124,6 +135,10 @@ public class Card {
 
 	public void setAttribute(ArrayList<String> attribute) {
 		this.attributes = attribute;
+	}
+	
+	public void addAttribute(String attribute) {
+		attributes.add(attribute);
 	}
 
 	public Rarity getRarity() {
@@ -268,6 +283,68 @@ public class Card {
 		stmt.setString(index++, rarity.toString());
 		stmt.setInt(index++, maxUnlimitedCopies);
 		stmt.setInt(index++, maxBlockCopies);
+	}
+	
+	public void storeToWithWildcards(PreparedStatement stmt) throws SQLException {
+		storeToWithWildcards(stmt, 1);
+	}
+	
+	// Set the parameters of a PreparedStatement beginning at the specified index
+	public void storeToWithWildcards(PreparedStatement stmt, int index) throws SQLException {
+		// stmt.setDouble(index++, set);
+		stmt.setString(index++, "%" + cardName + "%");
+		if (cardNumber == null || cardNumber.equals("")){
+			stmt.setString(index++, "%" + cardNumber + "%");
+		} else {
+			stmt.setString(index++, cardNumber);
+		}
+		
+		// Create a properly formated string of all the elements separated by "/"
+		String elementString = "";
+		for (Element element : elements){
+			elementString = elementString + element.toString() + "/";
+		}
+		
+		for (Element element : Element.values()){
+			if (elementString.contains(element.toString())){
+				elements.add(element);
+			}
+		}
+		
+		if (elementString.endsWith("/")){
+			elementString = elementString.substring(0, elementString.length() - 1);
+		}
+		stmt.setString(index++, "%" + elementString + "%");
+		
+		if (turnChakraCost != null && !turnChakraCost.equals("")){
+			stmt.setString(index++, turnChakraCost);
+		} else {
+			stmt.setString(index++, "%");
+		}
+		
+		// Create a properly formated string of all the elements separated by " "
+		String characteristicString = "";
+		for (String characteristic : characteristics){
+			characteristicString = characteristicString + characteristic + " ";
+		}
+		characteristicString = characteristicString.trim();
+		stmt.setString(index++, "%" + characteristicString + "%");
+		
+//		stmt.setString(index++, healthyStats);
+//		stmt.setString(index++, injuredStats);
+		stmt.setString(index++, "%" + effect + "%");
+		
+		// Create a properly formated string of all the attributes separated by " "
+		String attributeString = "";
+		for (String attribute : attributes){
+			attributeString = attributeString + attribute + " ";
+		}
+		attributeString = attributeString.trim();
+		stmt.setString(index++, "%" + attributeString + "%");
+//	
+//		stmt.setString(index++, rarity.toString());
+//		stmt.setInt(index++, maxUnlimitedCopies);
+//		stmt.setInt(index++, maxBlockCopies);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package org.naruto.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.naruto.controller.DeckBuilderController;
 import org.naruto.model.Card;
 import org.naruto.model.Deck;
+import org.naruto.model.Element;
 import org.naruto.model.persist.Database;
 
 public class DeckBuilderServlet2 extends HttpServlet{
@@ -20,6 +22,9 @@ public class DeckBuilderServlet2 extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
+		ArrayList<Element> elementChoices = new ArrayList<Element>(Arrays.asList(Element.values()));
+		req.setAttribute("elementChoices", elementChoices);
+		
 		req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);
 	}
 	
@@ -171,6 +176,8 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			// set other attributes
 			req.getSession().setAttribute("deck", deck);
 			req.setAttribute("errors", errors);
+			ArrayList<Element> elementChoices = new ArrayList<Element>(Arrays.asList(Element.values()));
+			req.setAttribute("elementChoices", elementChoices);
 			
 			req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);
 		} else {

@@ -106,6 +106,76 @@
 						<td><input type="text" name="cardNumberBox" size="30" value="${cardNumber}" /></td>
 						<td></td>
 					</tr>
+					
+					<tr>
+						<td class="text">Combat Attribute: </td>
+						<td><input type="text" name="combatAttributeBox" size="30" value="${combatAttribute}" /></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td class="text">Characteristic: </td>
+						<td><input type="text" name="characteristicBox" size="30" value="${characteristic}" /></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td class="text">Effect: </td>
+						<td><input type="text" name="effectBox" size="30" value="${effect}" /></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td class="text">Element: </td>
+						
+						<td>
+							<select name="elementBox">
+  								<option value="NONE">--- Select ---</option> 
+   								<c:forEach var="element" items="${elementChoices}">
+   									<option value="${element.value}">${element.value}</option>
+   								</c:forEach>
+					      	</select>
+                    	</td>
+                    	
+                    	<td></td>
+                  	</tr>
+                  	
+                  	<tr>
+						<td class="text">Turn Cost: </td>
+						
+						<td>
+							<select name="turnCostBox">
+  								<option value="NONE">--- Select ---</option> 
+   								<option value="0">0</option>
+   								<option value="1">1</option>
+   								<option value="2">2</option>
+   								<option value="3">3</option>
+   								<option value="4">4</option>
+   								<option value="5">5</option>
+   								<option value="6">6</option>
+   								<option value="7">7</option>
+   								<option value="8">8</option>
+   								<option value="9">9</option>
+					      	</select>
+                    	</td>
+                    
+                    	<td></td>
+                  	</tr>
+                  	
+                  	<tr>
+						<td class="text">Hand Cost: </td>
+						
+						<td>
+							<select name="handCostBox">
+  								<option value="NONE">--- Select ---</option> 
+   								<option value="0">0</option>
+   								<option value="1">1</option>
+   								<option value="2">2</option>
+					      	</select>
+                    	</td>
+                    
+                    	<td></td>
+                  	</tr>
 							
 					<tr>
 						<td><input name="searchButton" type="submit" value="Search" /></td>
@@ -195,7 +265,6 @@
 				<br />
 				<input name="sortButton" type="submit" value="Sort Deck" />
 				
-				<iframe style="width: 20%; height: 90%; position: absolute; left: 1520px; top: 90px;" src="http://www.bandai.com/naruto/cardlists_detail.php?c=c001#card"></iframe>
 			</div>
 		</form>		
 	</body>	

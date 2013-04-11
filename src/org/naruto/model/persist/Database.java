@@ -27,7 +27,7 @@ public class Database {
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		
-		try{
+		try {
 			stmt = conn.prepareStatement("SELECT * FROM cards WHERE id=?");
 			stmt.setInt(1, id);
 			
@@ -41,7 +41,7 @@ public class Database {
 				// No card was found with the given id
 				return null;
 			}	
-		} finally{
+		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);
 		}
@@ -52,7 +52,7 @@ public class Database {
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		
-		try{
+		try {
 			stmt = conn.prepareStatement("SELECT * FROM cards WHERE card_number=?");
 			stmt.setString(1, cardNumber);
 			
@@ -66,7 +66,7 @@ public class Database {
 				// No card was found with the given cardNumber
 				return null;
 			}	
-		} finally{
+		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);
 		}
@@ -77,7 +77,7 @@ public class Database {
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		
-		try{
+		try {
 			stmt = conn.prepareStatement("SELECT * FROM cards WHERE card_name=?");
 			stmt.setString(1, cardName);
 			
@@ -96,7 +96,7 @@ public class Database {
 			} else {
 				return results;
 			}
-		} finally{
+		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);
 		}
@@ -107,7 +107,7 @@ public class Database {
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		
-		try{
+		try {
 			stmt = conn.prepareStatement("SELECT distinct card_name FROM cards WHERE card_name LIKE ?");
 			stmt.setString(1, term + "%");
 			
@@ -119,6 +119,47 @@ public class Database {
 			}
 				                       
 			return result;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	public ArrayList<Card> searchForCardMatches(Card card) throws SQLException {
+		Connection conn = DBUtil.getThreadLocalConnection();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		
+		try {
+			// Determine what the query should be for handcost
+			// Note: this is necessary because there is no wildcard support for integers
+			String handCostQuery = "";
+			if (card.getHandCost() == -1){
+				handCostQuery = ">= 0";
+			} else {
+				handCostQuery = "= " + card.getHandCost();
+			}
+			
+			stmt = conn.prepareStatement("SELECT * FROM cards WHERE card_name LIKE ? and card_number LIKE ? and " +
+					"element LIKE ? and turn_chakra_cost LIKE ? and characteristics LIKE ? and effect LIKE ? and " +
+					"attribute LIKE ? and hand_cost " + handCostQuery);
+			card.storeToWithWildcards(stmt);
+			
+			System.out.println(stmt);
+			resultSet = stmt.executeQuery();
+			
+			ArrayList<Card> results = new ArrayList<Card>();
+			while (resultSet.next()){
+				Card result = new Card();
+				result.loadFrom(resultSet);
+				results.add(result);
+			}
+			
+			if (results.isEmpty()){
+				return null;
+			} else {
+				return results;
+			}
 		} finally{
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);
