@@ -264,8 +264,13 @@
 				
 				<br />
 				<input name="sortButton" type="submit" value="Sort Deck" />
-				
 			</div>
-		</form>		
+		</form>
+		
+		<form action="${pageContext.servletContext.contextPath}/uploadDeck" method="post" enctype="multipart/form-data">
+			<input type="file" name="file" size="50" />
+			<br />
+			<input type="submit" value="Upload File" />		
+		</form>
 	</body>	
 </html>

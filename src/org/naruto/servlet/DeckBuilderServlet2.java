@@ -22,6 +22,14 @@ public class DeckBuilderServlet2 extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
+		System.out.println("Does it get here");
+//		Deck deck = (Deck) req.getSession().getAttribute("deck");
+//		if (deck == null){
+//			// No deck found, create a new deck
+//			deck = new Deck();			
+//		}
+//		req.setAttribute("deck", deck);
+		
 		ArrayList<Element> elementChoices = new ArrayList<Element>(Arrays.asList(Element.values()));
 		req.setAttribute("elementChoices", elementChoices);
 		
@@ -115,7 +123,13 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			} 
 			
 			else if (req.getParameter("searchButton") != null) {
-				ArrayList<Card> results = controller.searchForMatches(req);
+				ArrayList<Card> results = null;
+				try {
+					results = controller.searchForMatches(req);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (results != null){
 					// remove cards that are not legal from search results
 					// TODO: change to allow unlimited format
@@ -148,6 +162,10 @@ public class DeckBuilderServlet2 extends HttpServlet{
 			
 			else if (req.getParameter("sortButton") != null) {
 				controller.sortDeck();
+			}
+			
+			else if (req.getParameter("saveButton") != null) {
+				controller.saveDeck(req, resp);
 			}
 			
 			// Check the deck for errors

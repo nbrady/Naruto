@@ -23,6 +23,10 @@
 		<servlet-class>org.naruto.servlet.DeckPrinterServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>UploadDeckServlet</servlet-name>
+		<servlet-class>org.naruto.servlet.UploadDeckServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>CardNameCompletion</servlet-name>
 		<servlet-class>org.naruto.servlet.CardNameCompletion</servlet-class>
 	</servlet>
@@ -43,6 +47,10 @@
 	<servlet-mapping>
 		<servlet-name>DeckPrinterServlet</servlet-name>
 		<url-pattern>deckPrinter</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UploadDeckServlet</servlet-name>
+		<url-pattern>uploadDeck</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CardNameCompletion</servlet-name>

@@ -1,11 +1,17 @@
 package org.naruto.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.naruto.model.Card;
 import org.naruto.model.Deck;
@@ -78,43 +84,10 @@ public class DeckBuilderController {
 		}
 	}
 	
-	public ArrayList<Card> searchForMatches(HttpServletRequest req){
-		try {
-//			String cardName = req.getParameter("cardNameBox");
-//			String cardNumber = req.getParameter("cardNumberBox");
-//			
-//			// Search for matching cards
-//			if (!cardNumber.equals("") && !cardName.equals("")){
-//	
-//				// Search based on card number
-//				ArrayList<Card> searchResults = new ArrayList<Card>();
-//				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
-//				
-//				// Make sure the card name also matches
-//				if (searchResults.get(0) != null && searchResults.get(0).getCardName().equals(cardName)){
-//					return searchResults;
-//				}	
-//			} else if (!cardNumber.equals("")){
-//				// Search based on card number
-//				ArrayList<Card> searchResults = new ArrayList<Card>();
-//				searchResults.add(Database.getInstance().getCardByCardNumber(cardNumber));
-//				
-//				if (searchResults.get(0) != null) {
-//					return searchResults;
-//				}
-//			} else if (!cardName.equals("")) {
-//				// Search based on card name
-//				return Database.getInstance().getCardsByCardName(cardName);	
-//			}
-			
-			// create card object
-			Card card = populateCardFromRequest(req);
-			return Database.getInstance().searchForCardMatches(card);
-		} catch (SQLException e) {
-				e.printStackTrace();
-			
-		}
-		return null;
+	public ArrayList<Card> searchForMatches(HttpServletRequest req) throws SQLException{
+		// create card object
+		Card card = populateCardFromRequest(req);
+		return Database.getInstance().searchForCardMatches(card);
 	}
 
 	private Card populateCardFromRequest(HttpServletRequest req) {
@@ -241,5 +214,10 @@ public class DeckBuilderController {
 	            }
 	        }
 		});
+	}
+
+	public void saveDeck(HttpServletRequest req, HttpServletResponse resp) {
+		// create file
+		
 	}
 }
