@@ -144,7 +144,7 @@ public class DeckBuilderController {
 	        	} else {
 		            int turnCost1 = Integer.parseInt(((Card) card1).getTurnChakraCost());
 		            int turnCost2 = Integer.parseInt(((Card) card2).getTurnChakraCost());
-		            return Integer.compare(turnCost1, turnCost2);
+		            return Integer.valueOf(turnCost1).compareTo(turnCost2);
 	        	}
 	        }
 		});	
