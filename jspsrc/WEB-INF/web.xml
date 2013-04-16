@@ -11,10 +11,6 @@
 		<servlet-class>org.naruto.servlet.DeckBuilderServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>DeckBuilderServlet2</servlet-name>
-		<servlet-class>org.naruto.servlet.DeckBuilderServlet2</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>DeckTesterServlet</servlet-name>
 		<servlet-class>org.naruto.servlet.DeckTesterServlet</servlet-class>
 	</servlet>
@@ -37,8 +33,8 @@
 		<url-pattern>deckBuilder</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>DeckBuilderServlet2</servlet-name>
-		<url-pattern>deckBuilder2</url-pattern>
+		<servlet-name>DeckBuilderServlet</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DeckTesterServlet</servlet-name>

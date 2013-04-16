@@ -1,10 +1,5 @@
 package org.naruto.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.naruto.model.Card;
 import org.naruto.model.Deck;
+import org.naruto.model.Rarity;
 import org.naruto.model.persist.Database;
 
 public class DeckBuilderController {
@@ -84,10 +80,17 @@ public class DeckBuilderController {
 		}
 	}
 	
-	public ArrayList<Card> searchForMatches(HttpServletRequest req) throws SQLException{
-		// create card object
-		Card card = populateCardFromRequest(req);
-		return Database.getInstance().searchForCardMatches(card);
+
+	public ArrayList<Card> searchForMatches(HttpServletRequest req){
+		try {
+			// create card object
+			Card card = populateCardFromRequest(req);
+			return Database.getInstance().searchForCardMatches(card, req.getParameter("cardTypeBox"));
+		} catch (SQLException e) {
+				e.printStackTrace();
+			
+		}
+		return null;
 	}
 
 	private Card populateCardFromRequest(HttpServletRequest req) {
@@ -107,6 +110,10 @@ public class DeckBuilderController {
 		if (!req.getParameter("handCostBox").equals("NONE")){
 			card.setHandCost(Integer.parseInt(req.getParameter("handCostBox")));
 		} 
+		if (!req.getParameter("cardRarityBox").equals("NONE")){
+			card.setRarity(Rarity.fromString(req.getParameter("cardRarityBox")));
+		} 
+
 		
 		return card;
 	}

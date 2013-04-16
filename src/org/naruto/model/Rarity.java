@@ -21,6 +21,10 @@ public enum Rarity {
         return text;
     }
     
+    public String getValue() {
+        return text;
+    }
+    
     public static Rarity fromString(String text) {
         if (text != null) {
         	for (Rarity rarity : Rarity.values()) {

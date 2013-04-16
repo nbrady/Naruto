@@ -44,11 +44,18 @@ public class DeckPrinterServlet extends HttpServlet{
 			sideBoard.put(card, deck.getNumberInSideDeck(card));
 		}
 		
+		// Separate reinforcement deck 
+		HashMap<Card, Integer> reinforcements = new HashMap<Card, Integer>();
+		for(Card card : deck.getReinforcementDeck()){
+			reinforcements.put(card, deck.getNumberInReinforcementDeck(card));
+		}
+		
 		req.setAttribute("ninjas", ninjas);
 		req.setAttribute("missions", missions);
 		req.setAttribute("jutsus", jutsus);
 		req.setAttribute("clients", clients);
 		req.setAttribute("sideboard", sideBoard);
+		req.setAttribute("reinforcements", reinforcements);
 		req.getRequestDispatcher("/view/deckPrinter.jsp").forward(req, resp);
 	}
 

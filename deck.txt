@@ -1,0 +1,3 @@
+3	Utakata				n1353
+3	Tenten				n1335
+3	Naruto Uzumaki		n1340

@@ -92,11 +92,12 @@ public class UploadDeckServlet extends HttpServlet{
 				e.printStackTrace();
 			}
 			
-			System.out.print("Gets here");
+			System.out.println("Gets here");
 			
 			req.getSession().setAttribute("deck", deck);
 			
-			req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);
+			//req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);
+			resp.sendRedirect("/deckBuilder");
 		}
 	}
 	

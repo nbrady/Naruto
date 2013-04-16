@@ -282,4 +282,14 @@ public class Deck {
 		}
 		return occurences;
 	}
+	
+	public int getNumberInReinforcementDeck(Card card){
+		int occurences = 0;
+		for (Card c : reinforcementDeck){
+			if (c.equals(card)){
+				occurences++;
+			}
+		}
+		return occurences;
+	}
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.naruto.model.Card;
@@ -125,14 +126,14 @@ public class Database {
 		}
 	}
 
-	public ArrayList<Card> searchForCardMatches(Card card) throws SQLException {
+	public ArrayList<Card> searchForCardMatches(Card card, String cardType) throws SQLException {
 		Connection conn = DBUtil.getThreadLocalConnection();
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		
 		try {
-			// Determine what the query should be for handcost
-			// Note: this is necessary because there is no wildcard support for integers
+			// Determine what the query should be for handcost and set
+			// Note: this is necessary because there is no wildcard support for integers and doubles
 			String handCostQuery = "";
 			if (card.getHandCost() == -1){
 				handCostQuery = ">= 0";
@@ -142,7 +143,7 @@ public class Database {
 			
 			stmt = conn.prepareStatement("SELECT * FROM cards WHERE card_name LIKE ? and card_number LIKE ? and " +
 					"element LIKE ? and turn_chakra_cost LIKE ? and characteristics LIKE ? and effect LIKE ? and " +
-					"attribute LIKE ? and hand_cost " + handCostQuery);
+					"attribute LIKE ? and rarity LIKE ? and hand_cost " + handCostQuery);
 			card.storeToWithWildcards(stmt);
 			
 			System.out.println(stmt);
@@ -155,6 +156,9 @@ public class Database {
 				results.add(result);
 			}
 			
+			// Only show results of the card type the user selected
+			results = removeOtherCardTypes(results, cardType);
+			
 			if (results.isEmpty()){
 				return null;
 			} else {
@@ -164,6 +168,41 @@ public class Database {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+
+	private ArrayList<Card> removeOtherCardTypes(ArrayList<Card> results, String cardType) {
+		if (cardType.equalsIgnoreCase("Ninja")){
+			Iterator<Card> iterator = results.iterator();
+			while (iterator.hasNext()){
+				if (!iterator.next().isNinja()){
+					System.out.println("Gets here");
+					iterator.remove();
+				}
+			}
+		} else if (cardType.equalsIgnoreCase("Mission")){
+			Iterator<Card> iterator = results.iterator();
+			while (iterator.hasNext()){
+				if (!iterator.next().isMission()){
+					iterator.remove();
+				}
+			}
+		} else if (cardType.equalsIgnoreCase("Jutsu")){
+			Iterator<Card> iterator = results.iterator();
+			while (iterator.hasNext()){
+				if (!iterator.next().isJutsu()){
+					iterator.remove();
+				}
+			}
+		} else if (cardType.equalsIgnoreCase("Client")){
+			Iterator<Card> iterator = results.iterator();
+			while (iterator.hasNext()){
+				if (!iterator.next().isJutsu()){
+					iterator.remove();
+				}
+			}
+		}
+		
+		return results;
 	}
 	
 }

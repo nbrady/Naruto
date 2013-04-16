@@ -17,7 +17,7 @@
 		</style>
 	</head>
 	
-	<body>
+	<body style="width: >
 		<div style="position: absolute; top: 50px;">
 			Player Name: ______________________ <br />
 			Player Bandai ID#: __________________
@@ -47,25 +47,46 @@
 				</c:if>
 			</table>
 			
-
-			<table style="width: 33%; float: left;">
-				<c:if test="${empty jutsus}"> 
-					<tr>
-						<td style="width: 20%; text-align: center;">&nbsp;</td>
-						<td style="width: 60%; text-align: center;">&nbsp;</td>
-						<td style="width: 20%; text-align: center;">&nbsp;</td>
-					</tr>
-				</c:if>
-				<c:if test="${! empty jutsus}">
-					<c:forEach var="jutsu" items="${jutsus}">
+			<div style="width: 33%; float: left;">
+				<table style="width: 100%;">
+					<c:if test="${empty jutsus}"> 
 						<tr>
-							<td style="width: 20%; text-align: center;">${jutsu.key.cardNumber}</td>
-							<td style="width: 60%; text-align: center;">${jutsu.key.cardName}</td>
-							<td style="width: 20%; text-align: center;">${jutsu.value}</td>
+							<td style="width: 20%; text-align: center;">&nbsp;</td>
+							<td style="width: 60%; text-align: center;">&nbsp;</td>
+							<td style="width: 20%; text-align: center;">&nbsp;</td>
 						</tr>
-					</c:forEach>
-				</c:if>
-			</table>
+					</c:if>
+					<c:if test="${! empty jutsus}">
+						<c:forEach var="jutsu" items="${jutsus}">
+							<tr>
+								<td style="width: 20%; text-align: center;">${jutsu.key.cardNumber}</td>
+								<td style="width: 60%; text-align: center;">${jutsu.key.cardName}</td>
+								<td style="width: 20%; text-align: center;">${jutsu.value}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+				
+				<table style="width: 33%; margin-top: 273px; position: absolute;">
+					<c:if test="${empty reinforcements}"> 
+						<tr>
+							<td style="width: 20%; text-align: center;">&nbsp;</td>
+							<td style="width: 60%; text-align: center;">&nbsp;</td>
+							<td style="width: 20%; text-align: center;">&nbsp;</td>
+						</tr>
+					</c:if>
+					<c:if test="${! empty reinforcements}">
+						<c:forEach var="reinforcement" items="${reinforcements}">
+							<tr>
+								<td style="width: 20%; text-align: center;">${reinforcement.key.cardNumber}</td>
+								<td style="width: 60%; text-align: center;">${reinforcement.key.cardName}</td>
+								<td style="width: 20%; text-align: center;">${reinforcement.value}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+				
+			</div>
 				
 			<div style="width: 33%; float: left;">
 				<table style="width: 100%">
@@ -87,7 +108,7 @@
 					</c:if>
 				</table>
 				
-				<table style="width: 100%; margin-top: 194px;">
+				<table style="width: 33%; margin-top: 193px; position: absolute;">
 					<c:if test="${empty clients}"> 
 						<tr>
 							<td style="width: 20%; text-align: center;">&nbsp;</td>
@@ -106,7 +127,7 @@
 					</c:if>
 				</table>
 				
-				<table style="width: 100%; margin-top: 126px;">
+				<table style="width: 33%; margin-top: 273px; position: absolute;">
 					<c:if test="${empty sideboard}"> 
 						<tr>
 							<td style="width: 20%; text-align: center;">&nbsp;</td>

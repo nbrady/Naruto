@@ -3,6 +3,7 @@ package org.naruto.model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 public class Card {
@@ -168,7 +169,7 @@ public class Card {
 	public boolean isNinja(){
 		if (cardNumber.startsWith("n")){
 			return true;
-		} else if (!healthyStats.equals("None") || !injuredStats.equals("None")){
+		} else if (!healthyStats.equalsIgnoreCase("None") || !injuredStats.equalsIgnoreCase("None")){
 			return true;
 		} else {
 			return false;
@@ -291,7 +292,10 @@ public class Card {
 	
 	// Set the parameters of a PreparedStatement beginning at the specified index
 	public void storeToWithWildcards(PreparedStatement stmt, int index) throws SQLException {
-		// stmt.setDouble(index++, set);
+		// Remove trailing zeros
+		// DecimalFormat format = new DecimalFormat("0.#");
+		// stmt.setDouble(index++, Double.parseDouble(format.format(set)));
+		
 		stmt.setString(index++, "%" + cardName + "%");
 		if (cardNumber == null || cardNumber.equals("")){
 			stmt.setString(index++, "%" + cardNumber + "%");
@@ -341,8 +345,11 @@ public class Card {
 		}
 		attributeString = attributeString.trim();
 		stmt.setString(index++, "%" + attributeString + "%");
-//	
-//		stmt.setString(index++, rarity.toString());
+		if (rarity != null) {
+			stmt.setString(index++, "%" + rarity.toString() + "%");
+		} else {
+			stmt.setString(index++, "%");
+		}
 //		stmt.setInt(index++, maxUnlimitedCopies);
 //		stmt.setInt(index++, maxBlockCopies);
 	}
