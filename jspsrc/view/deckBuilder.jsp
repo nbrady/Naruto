@@ -88,7 +88,7 @@
 			</tr>
 		</table>
 		<br />
-		<form name="addCardForm" id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder2" method="post">
+		<form name="addCardForm" id="addCardForm" action="${pageContext.servletContext.contextPath}/deckBuilder" method="post">
 			<div style="width: 25%; height: 90%; float: left;  border: 1px solid black; overflow-y: scroll;">
 				<input type="hidden" name="submitted" value="true" />
 				<input id="requestIdElt" type="hidden" name="requestId" value="-1" />
@@ -325,6 +325,8 @@
 				</div>
 				
 				<p />
+				
+				<input type="submit" value="Save Deck" />
 				
 				<c:if test="${! empty errors}">
 					<c:forEach var="error" items="${errors}">
