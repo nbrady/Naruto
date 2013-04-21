@@ -253,7 +253,7 @@
 			</div>
 		
 			<p />
-			<div style="width: 60%; float: left; margin-left: 20px">							
+			<div style="width: 54%; float: left; margin-left: 20px">							
 
 				Main Deck:
 				
@@ -316,7 +316,7 @@
 		</form>
 		
 		<form action="${pageContext.servletContext.contextPath}/uploadDeck" method="post" enctype="multipart/form-data">
-			<div style="width: 10%; float: left;">
+			<div style="width: 19%; float: left;">
 				<div style="border: 1px solid black;">
 					Upload Deck: <p />
 					<input type="file" name="file" size="50" />
