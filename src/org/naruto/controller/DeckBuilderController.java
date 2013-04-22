@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.naruto.model.Card;
 import org.naruto.model.Deck;
@@ -221,10 +220,5 @@ public class DeckBuilderController {
 	            }
 	        }
 		});
-	}
-
-	public void saveDeck(HttpServletRequest req, HttpServletResponse resp) {
-		// create file
-		
 	}
 }

@@ -38,5 +38,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-io-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons/commons-lang3-3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

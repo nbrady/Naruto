@@ -315,25 +315,27 @@
 			</div>
 		</form>
 		
-		<form action="${pageContext.servletContext.contextPath}/uploadDeck" method="post" enctype="multipart/form-data">
-			<div style="width: 19%; float: left;">
+		<div style="width: 19%; float: left;">
+			<form action="${pageContext.servletContext.contextPath}/uploadDeck" method="post" enctype="multipart/form-data">
 				<div style="border: 1px solid black;">
 					Upload Deck: <p />
 					<input type="file" name="file" size="50" />
 					<p />
 					<input type="submit" value="Upload" />		
 				</div>
-				
-				<p />
-				
-				<input type="submit" value="Save Deck" />
-				
-				<c:if test="${! empty errors}">
-					<c:forEach var="error" items="${errors}">
-						<span class="error">${error}<br /></span>
-					</c:forEach>
-				</c:if>
-			</div>
-		</form>
+			</form>
+			
+			<p />
+			
+			<form action="${pageContext.servletContext.contextPath}/saveDeck" method="post">	
+				<input name="saveDeckButton" type="submit" value="Save Deck" />
+			</form>
+			
+			<c:if test="${! empty errors}">
+				<c:forEach var="error" items="${errors}">
+					<span class="error">${error}<br /></span>
+				</c:forEach>
+			</c:if>
+		</div>
 	</body>	
 </html>

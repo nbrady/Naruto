@@ -188,11 +188,7 @@ public class DeckBuilderServlet extends HttpServlet{
 			else if (req.getParameter("sortButton") != null) {
 				controller.sortDeck();
 			}
-			
-			else if (req.getParameter("saveButton") != null) {
-				controller.saveDeck(req, resp);
-			}
-			
+						
 			// Check the deck for errors
 			ArrayList<String> errors = controller.getDeckErrors();
 			
@@ -230,6 +226,7 @@ public class DeckBuilderServlet extends HttpServlet{
 			req.setAttribute("rarityChoices", rarityChoices);
 			
 			req.getRequestDispatcher("/view/deckBuilder.jsp").forward(req, resp);
+			return;
 		} else {
 			throw new ServletException("Invalid post request.");
 		}
