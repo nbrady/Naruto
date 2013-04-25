@@ -43,6 +43,7 @@
 		<div style="clear: both"></div>
 		<form id="drawCardForm" action="${pageContext.servletContext.contextPath}/deckTester" method="post">
 			<input name="drawCard" type="submit" value="Draw Card" />
+			<input name="shuffleDeck" type="submit" value="Shuffle Deck" />
 		</form>
 				
 	</body>

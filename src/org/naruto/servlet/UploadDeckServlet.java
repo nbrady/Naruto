@@ -72,7 +72,6 @@ public class UploadDeckServlet extends HttpServlet{
 						String cardNumber = currentLine.substring(currentLine.lastIndexOf("\t") + 1);
 						Card card = Database.getInstance().getCardByCardNumber(cardNumber);
 						for (int i = 0; i < quantity; i++){
-							System.out.println("Adding " + card.getCardName());
 							deck.getMainDeck().add(card);
 						}
 					}

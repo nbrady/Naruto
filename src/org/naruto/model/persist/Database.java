@@ -175,7 +175,6 @@ public class Database {
 			Iterator<Card> iterator = results.iterator();
 			while (iterator.hasNext()){
 				if (!iterator.next().isNinja()){
-					System.out.println("Gets here");
 					iterator.remove();
 				}
 			}

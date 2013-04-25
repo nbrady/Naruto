@@ -1,3 +1,7 @@
-3	Utakata				n1353
-3	Tenten				n1335
-3	Naruto Uzumaki		n1340
+1	Catastrophic Planetary Construction               	j919
+1	Kamui                                             	j871
+1	Almighty Push                                     	j888
+1	Snake Sword                                       	j858
+2	Lariat                                            	j852
+1	Lightning Blade                                   	j870
+1	Rasengan                                          	j879
