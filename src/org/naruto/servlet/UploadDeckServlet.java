@@ -65,14 +65,42 @@ public class UploadDeckServlet extends HttpServlet{
 					String currentLine;
 					reader = new BufferedReader(new FileReader(file));
 		 
-					while ((currentLine = reader.readLine()) != null) {
-						// Create card and add it to deck
-						System.out.println(currentLine.substring(currentLine.lastIndexOf("\t") + 1));
-						int quantity = Integer.parseInt(currentLine.substring(0, 1));
-						String cardNumber = currentLine.substring(currentLine.lastIndexOf("\t") + 1);
-						Card card = Database.getInstance().getCardByCardNumber(cardNumber);
-						for (int i = 0; i < quantity; i++){
-							deck.getMainDeck().add(card);
+					// Create main deck
+					if ((currentLine = reader.readLine()).equals("Main Deck:")){
+						while ((currentLine = reader.readLine()) != null && !currentLine.equals("")) {
+							// Create card and add it to deck
+							int quantity = Integer.parseInt(currentLine.substring(0, 1));
+							String cardNumber = currentLine.substring(currentLine.lastIndexOf("\t") + 1);
+							Card card = Database.getInstance().getCardByCardNumber(cardNumber);
+							for (int i = 0; i < quantity; i++){
+								deck.getMainDeck().add(card);
+							}
+						}
+					}
+					
+					// Create side deck
+					if ((currentLine = reader.readLine()).equals("Side Deck:")){
+						while ((currentLine = reader.readLine()) != null && !currentLine.equals("")) {
+							// Create card and add it to deck
+							int quantity = Integer.parseInt(currentLine.substring(0, 1));
+							String cardNumber = currentLine.substring(currentLine.lastIndexOf("\t") + 1);
+							Card card = Database.getInstance().getCardByCardNumber(cardNumber);
+							for (int i = 0; i < quantity; i++){
+								deck.getSideDeck().add(card);
+							}
+						}
+					}
+					
+					// Create reinforcement deck
+					if ((currentLine = reader.readLine()).equals("Reinforcement Deck:")){
+						while ((currentLine = reader.readLine()) != null) {
+							// Create card and add it to deck
+							int quantity = Integer.parseInt(currentLine.substring(0, 1));
+							String cardNumber = currentLine.substring(currentLine.lastIndexOf("\t") + 1);
+							Card card = Database.getInstance().getCardByCardNumber(cardNumber);
+							for (int i = 0; i < quantity; i++){
+								deck.getReinforcementDeck().add(card);
+							}
 						}
 					}
 				} catch (IOException e) {
@@ -90,12 +118,9 @@ public class UploadDeckServlet extends HttpServlet{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			System.out.println("Gets here");
-			
+						
 			req.getSession().setAttribute("deck", deck);
 			
-			//req.getRequestDispatcher("/view/deckBuilder2.jsp").forward(req, resp);
 			resp.sendRedirect("/deckBuilder");
 		}
 	}

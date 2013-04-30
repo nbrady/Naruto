@@ -30,15 +30,38 @@ public class SaveDeckServlet extends HttpServlet{
 			     
 			     Deck deck = (Deck) req.getSession().getAttribute("deck");
 			     
-			     // create hashmap that contains the quantities
-			     HashMap<Card, Integer> map = new HashMap<Card, Integer>();
+			     outputStream.println("Main Deck:");
+			     
+			     // Main deck
+			     HashMap<Card, Integer> mainDeck = new HashMap<Card, Integer>();
 			     for (Card card : deck.getMainDeck()){
-			    	 map.put(card, deck.getNumberInMainDeck(card));
+			    	 mainDeck.put(card, deck.getNumberInMainDeck(card));
+			     }	     
+			     for (Card card : mainDeck.keySet()){
+			    	 outputStream.println(deck.getNumberInMainDeck(card) + "\t" + StringUtils.rightPad(card.getCardName(), 50) + "\t" + card.getCardNumber());
 			     }
-			     	     
-			    for (Card card : map.keySet()){
-			    	outputStream.println(deck.getNumberInMainDeck(card) + "\t" + StringUtils.rightPad(card.getCardName(), 50) + "\t" + card.getCardNumber());
-			    }
+			     
+			     outputStream.println("\nSide Deck:");
+			     
+			     // Side deck
+			     HashMap<Card, Integer> sideDeck = new HashMap<Card, Integer>();
+			     for (Card card : deck.getSideDeck()){
+			    	 sideDeck.put(card, deck.getNumberInSideDeck(card));
+			     }	     
+			     for (Card card : sideDeck.keySet()){
+			    	 outputStream.println(deck.getNumberInSideDeck(card) + "\t" + StringUtils.rightPad(card.getCardName(), 50) + "\t" + card.getCardNumber());
+			     }
+			     
+			     outputStream.println("\nReinforcement Deck:");
+			     
+			     // Side deck
+			     HashMap<Card, Integer> reinforcementDeck = new HashMap<Card, Integer>();
+			     for (Card card : deck.getReinforcementDeck()){
+			    	 reinforcementDeck.put(card, deck.getNumberInReinforcementDeck(card));
+			     }	     
+			     for (Card card : reinforcementDeck.keySet()){
+			    	 outputStream.println(deck.getNumberInReinforcementDeck(card) + "\t" + StringUtils.rightPad(card.getCardName(), 50) + "\t" + card.getCardNumber());
+			     }
 			} finally {
 				if (outputStream != null){
 					outputStream.close();
